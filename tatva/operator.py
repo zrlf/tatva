@@ -20,7 +20,17 @@ from __future__ import annotations
 
 from functools import partial
 from numbers import Number
-from typing import Any, Callable, Concatenate, ParamSpec, Protocol, TypeAlias, overload
+from typing import (
+    Any,
+    Callable,
+    Concatenate,
+    Generic,
+    ParamSpec,
+    Protocol,
+    TypeAlias,
+    TypeVar,
+    overload,
+)
 
 import equinox as eqx
 import jax
@@ -37,6 +47,7 @@ P = ParamSpec("P")
 
 Numeric: TypeAlias = float | int | jnp.number
 Form: TypeAlias = Callable[Concatenate[jax.Array, jax.Array, P], jax.Array | float]
+ElementT = TypeVar("ElementT", bound=Element)
 
 
 class FormCallable(Protocol[P]):
@@ -60,7 +71,7 @@ class _VmapOverElementsCallable(Protocol):
     ) -> jax.Array | float: ...
 
 
-class Operator(eqx.Module):
+class Operator(Generic[ElementT], eqx.Module):
     """A class that provides an Operator for finite element method (FEM) assembly.
 
     Args:
@@ -82,7 +93,7 @@ class Operator(eqx.Module):
     """
 
     mesh: Mesh
-    element: Element
+    element: ElementT
 
     def _vmap_over_elements_and_quads(
         self, nodal_values: jax.Array, func: _VmapOverElementsCallable
