@@ -29,6 +29,7 @@ from typing import (
     Protocol,
     TypeAlias,
     TypeVar,
+    cast,
     overload,
 )
 
@@ -43,6 +44,7 @@ from tatva.mesh import Mesh, find_containing_polygons
 # TODO: naming of these types
 
 P = ParamSpec("P")
+RT = TypeVar("RT", bound=jax.Array | tuple, covariant=True)
 
 
 Numeric: TypeAlias = float | int | jnp.number
@@ -69,6 +71,26 @@ class _VmapOverElementsCallable(Protocol):
         el_nodal_values: jax.Array,
         el_nodal_coords: jax.Array,
     ) -> jax.Array | float: ...
+
+
+class MappableOverElements(Protocol[P, RT]):
+    """Internal protocol for functions that are mapped over elements using
+    `Operator.map`."""
+
+    @staticmethod
+    def __call__(
+        xi: jax.Array,
+        *el_values: P.args,
+        **el_kwargs: P.kwargs,
+    ) -> RT: ...
+
+
+class MappedCallable(Protocol[P, RT]):
+    @staticmethod
+    def __call__(
+        *args: P.args,
+        **kwargs: P.kwargs,
+    ) -> RT: ...
 
 
 class Operator(Generic[ElementT], eqx.Module):
@@ -125,6 +147,32 @@ class Operator(Generic[ElementT], eqx.Module):
             _at_each_element,
             in_axes=(0, 0),
         )(nodal_values[self.mesh.elements], self.mesh.coords[self.mesh.elements])
+
+    def map(self, func: MappableOverElements[P, RT]) -> MappedCallable[P, RT]:
+        """Maps a function over the elements and quad points of the mesh.
+
+        Returns a function that takes values at nodal points (globally) and returns the
+        vmapped result over the elements and quad points.
+
+        Args:
+            func: The function to map over the elements and quadrature points.
+        """
+
+        def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:
+            # values should be arrays!
+            _values = cast(tuple[jax.Array, ...], values)
+
+            def _at_each_element(*el_values) -> jax.Array:
+                return eqx.filter_vmap(
+                    lambda xi: func(xi, *el_values, **kwargs),
+                )(self.element.quad_points)
+
+            return eqx.filter_vmap(
+                _at_each_element,
+                in_axes=(0,) * len(values),
+            )(*(v[self.mesh.elements] for v in _values))
+
+        return _mapped
 
     @overload
     def integrate(self, arg: Form[P]) -> FormCallable[P]: ...
