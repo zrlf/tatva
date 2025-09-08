@@ -18,6 +18,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from functools import partial
 from numbers import Number
 from typing import (
@@ -45,11 +46,9 @@ from tatva.mesh import Mesh, find_containing_polygons
 
 P = ParamSpec("P")
 RT = TypeVar("RT", bound=jax.Array | tuple, covariant=True)
-
-
+ElementT = TypeVar("ElementT", bound=Element)
 Numeric: TypeAlias = float | int | jnp.number
 Form: TypeAlias = Callable[Concatenate[jax.Array, jax.Array, P], jax.Array | float]
-ElementT = TypeVar("ElementT", bound=Element)
 
 
 class FormCallable(Protocol[P]):
@@ -151,7 +150,12 @@ class Operator(Generic[ElementT], eqx.Module):
             in_axes=(0, 0),
         )(nodal_values[self.mesh.elements], self.mesh.coords[self.mesh.elements])
 
-    def map(self, func: MappableOverElementsAndQuads[P, RT]) -> MappedCallable[P, RT]:
+    def map(
+        self,
+        func: MappableOverElementsAndQuads[P, RT],
+        *,
+        element_quantity: Sequence[int] = (),
+    ) -> MappedCallable[P, RT]:
         """Maps a function over the elements and quad points of the mesh.
 
         Returns a function that takes values at nodal points (globally) and returns the
@@ -159,6 +163,9 @@ class Operator(Generic[ElementT], eqx.Module):
 
         Args:
             func: The function to map over the elements and quadrature points.
+            element_quantity: Indices of the arguments of `func` that are quantities
+                defined per element. The rest of the arguments are assumed to be defined
+                at nodal points.
         """
 
         def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:
@@ -173,12 +180,20 @@ class Operator(Generic[ElementT], eqx.Module):
             return eqx.filter_vmap(
                 _at_each_element,
                 in_axes=(0,) * len(values),
-            )(*(v[self.mesh.elements] for v in _values))
+            )(
+                *(
+                    v[self.mesh.elements] if i not in element_quantity else v
+                    for i, v in enumerate(_values)
+                )
+            )
 
         return _mapped
 
     def map_over_elements(
-        self, func: MappableOverElements[P, RT]
+        self,
+        func: MappableOverElements[P, RT],
+        *,
+        element_quantity: Sequence[int] = (),
     ) -> MappedCallable[P, RT]:
         """Maps a function over the elements of the mesh.
 
@@ -187,6 +202,9 @@ class Operator(Generic[ElementT], eqx.Module):
 
         Args:
             func: The function to map over the elements.
+            element_quantity: Indices of the arguments of `func` that are quantities
+                defined per element. The rest of the arguments are assumed to be defined
+                at nodal points.
         """
 
         def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:
@@ -199,7 +217,12 @@ class Operator(Generic[ElementT], eqx.Module):
             return eqx.filter_vmap(
                 _at_each_element,
                 in_axes=(0,) * len(values),
-            )(*(v[self.mesh.elements] for v in _values))
+            )(
+                *(
+                    v[self.mesh.elements] if i not in element_quantity else v
+                    for i, v in enumerate(_values)
+                )
+            )
 
         return _mapped
 
