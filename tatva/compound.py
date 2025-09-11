@@ -25,37 +25,21 @@ from jax import Array
 from jax.tree_util import register_pytree_node_class
 
 
-class field:
+class _field:
     """A descriptor to define fields in the State class."""
 
     shape: tuple[int, ...]
     default_factory: Callable | None
 
     def __init__(
-        self, shape: tuple[int, ...], default_factory: Callable | None = None
+        self,
+        shape: tuple[int, ...],
+        default_factory: Callable | None = None,
+        slice: slice | None = None,
     ) -> None:
         self.shape = shape if len(shape) > 1 else (*shape, 1)
         self.default_factory = default_factory
-        self.slice: slice = None  # type: ignore
-
-    @overload
-    def __get__(self, instance: None, owner) -> field: ...
-    @overload
-    def __get__(self, instance: Compound, owner) -> Array: ...
-    def __get__(self, instance, owner=None):
-        if instance is None:
-            return self
-        # get slice
-        return instance.arr[self.slice].reshape(self.shape)
-
-    def __set__(self, instance: Compound, value: Array | float | int) -> None:
-        arr = jnp.asarray(value)
-        instance.arr = instance.arr.at[self.slice].set(arr)
-
-    def __delete__(self, instance):
-        raise AttributeError(
-            f"Cannot delete field ... from {instance.__class__.__name__}."
-        )
+        self.slice: slice = slice  # type: ignore
 
     def __getitem__(self, arg) -> Array:
         # Normalize to tuple
@@ -82,11 +66,83 @@ class field:
         return jnp.array(flat_local + self.slice.start)
 
 
-class CompoundMeta(type):
+class field(_field):
+    @overload
+    def __get__(self, instance: None, owner) -> field: ...
+    @overload
+    def __get__(self, instance: Compound, owner) -> Array: ...
+    def __get__(self, instance, owner=None):
+        if instance is None:
+            return self
+        # get slice
+        return instance.arr[self.slice].reshape(self.shape)
+
+    def __set__(self, instance: Compound, value: Array | float | int) -> None:
+        arr = jnp.asarray(value)
+        instance.arr = instance.arr.at[self.slice].set(arr.flatten())
+
+    def __delete__(self, instance):
+        raise AttributeError(
+            f"Cannot delete field ... from {instance.__class__.__name__}."
+        )
+
+
+class _field_sub_of_stack(field):
+    """A descriptor to define fields that are sub-fields of a stacked field in the State class."""
+
+    def __init__(
+        self,
+        shape: tuple[int, ...],
+        parent_field: _field,
+        parent_slice: tuple[slice, ...],
+    ) -> None:
+        super().__init__(shape)
+        self.parent_field = parent_field
+        self.parent_slice = parent_slice
+
+    @overload
+    def __get__(self, instance: None, owner) -> field: ...
+    @overload
+    def __get__(self, instance: Compound, owner) -> Array: ...
+    def __get__(self, instance, owner=None):
+        if instance is None:
+            return self
+        # get slice
+        return instance.arr[self.parent_field.slice].reshape(self.parent_field.shape)[
+            self.parent_slice
+        ]
+
+    def __set__(self, instance: Compound, value: Array | float | int) -> None:
+        arr = jnp.asarray(value)
+        instance.arr = (
+            instance.arr[self.parent_field.slice]
+            .reshape(self.parent_field.shape)
+            .at[self.parent_slice]
+            .set(arr)
+        ).flatten()
+
+    def __getitem__(self, arg) -> Array:
+        # Normalize to tuple
+        if not isinstance(arg, tuple):
+            arg = (arg,)
+        # extend with full slices
+        if len(arg) < len(self.shape):
+            arg = arg + (slice(None),) * (len(self.shape) - len(arg))
+
+        # get indices in the parent field
+        parent_idxs = self.parent_field.__getitem__(slice(None)).reshape(
+            self.parent_field.shape
+        )
+        return parent_idxs[self.parent_slice].__getitem__(arg).flatten()
+
+
+class _CompoundMeta(type):
     fields: tuple[tuple[str, field], ...]
     size: int
 
-    def __new__(mcls, name: str, bases: tuple[type, ...], namespace: dict[str, Any]):
+    def __new__(
+        mcls, name: str, bases: tuple[type, ...], namespace: dict[str, Any], **kwargs
+    ):
         fields: list[tuple[str, field]] = []
         size: int = 0
 
@@ -105,6 +161,8 @@ class CompoundMeta(type):
         cls = super().__new__(mcls, name, bases, namespace)
         cls.fields = tuple(fields)
         cls.size = size
+        if kwargs.get("stack_fields") is not None:
+            cls._stack_fields(**kwargs)  # type: ignore
 
         # register as pytree node for JAX transformations
         register_pytree_node_class(cls)
@@ -119,7 +177,7 @@ class CompoundMeta(type):
         return (nodal_vals[:, *dofs] if dofs else nodal_vals).flatten()
 
 
-class Compound(metaclass=CompoundMeta):
+class Compound(metaclass=_CompoundMeta):
     """A compound array/state.
 
     A helper class to create a compound state with multiple fields. It simplifies packing
@@ -160,6 +218,89 @@ class Compound(metaclass=CompoundMeta):
     @classmethod
     def tree_unflatten(cls, aux_data: Any, children: tuple[Array]) -> Self:
         return cls(*children)
+
+    @classmethod
+    def _stack_fields(cls, stack_fields: tuple[str, ...], stack_axis: int = -1) -> None:
+        """Reorder fields by stacking specified fields along some axis. Modifies the class
+        in place!
+
+        Args:
+            stack_fields: Names of the fields to be stacked.
+            stack_axis: Axis along which to stack the fields. Defaults to -1.
+        """
+        fields = {k: v for k, v in cls.fields}
+        base_shape = fields[stack_fields[0]].shape
+        stack_axis = stack_axis % len(base_shape)  # get positive axis
+        base_shape = jnp.asarray(base_shape)[
+            jnp.array([i for i in range(len(base_shape)) if i != stack_axis])
+        ]
+
+        stack_size = sum(
+            int(jnp.prod(jnp.asarray(fields[name].shape))) // base_shape.prod()
+            for name in stack_fields
+        )
+        stacked_shape = jnp.insert(base_shape, stack_axis, stack_size)
+        size = int(jnp.prod(jnp.asarray(stacked_shape)))
+        stacked_slice = slice(0, size)
+        stacked_field = _field(tuple(stacked_shape), slice=stacked_slice)
+
+        new_fields = []
+
+        # create new fields that are sub-fields of the stacked field
+        for idx, name in enumerate(stack_fields):
+            new_field = _field_sub_of_stack(
+                shape=fields[name].shape,
+                parent_field=stacked_field,
+                parent_slice=tuple(
+                    slice(None)
+                    if i != stack_axis
+                    else slice(
+                        sum(
+                            int(jnp.prod(jnp.asarray(fields[n].shape)))
+                            // base_shape.prod()
+                            for n in stack_fields[:idx]
+                        ),
+                        sum(
+                            int(jnp.prod(jnp.asarray(fields[n].shape)))
+                            // base_shape.prod()
+                            for n in stack_fields[: idx + 1]
+                        ),
+                    )
+                    for i in range(len(stacked_shape))
+                ),
+            )
+            # check base shape compatibility or raise error
+            if not jnp.all(
+                jnp.asarray(new_field.shape)[
+                    jnp.array(
+                        [i for i in range(len(new_field.shape)) if i != stack_axis]
+                    )
+                ]
+                == base_shape
+            ):
+                raise ValueError(
+                    f"Field {name} with shape {new_field.shape} is not compatible with "
+                    f"base shape {base_shape} along axis {stack_axis}."
+                )
+
+            # set new field in class and add to new fields list
+            setattr(cls, name, new_field)
+            new_fields.append((name, new_field))
+
+        # update other fields slices
+        offset = size
+        for name, field_obj in cls.fields:
+            if name in stack_fields:
+                continue
+            n = int(jnp.prod(jnp.asarray(field_obj.shape)))
+            start = offset
+            end = start + n
+            field_obj.slice = slice(start, end)
+            offset += n
+            new_fields.append((name, field_obj))
+
+        # finally update class fields and size
+        cls.fields = tuple(new_fields)
 
     def __init__(self, arr: Array | None = None) -> None:
         """Initialize the state with given keyword arguments."""
