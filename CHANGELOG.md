@@ -10,14 +10,14 @@ All notable changes to this project will be documented here, following
 
 ### Fix
 
-- update version of jax to >=0.4.1 (1dae07b)
-- remove autovmap and replacing it with dependency of the original project (b8b8b60)
+- update version of jax to >=0.4.1 (fc6a34d)
+- remove autovmap and replacing it with dependency of the original project (1cb17aa)
 
 ## v0.1.1 (2025-09-11)
 
 ### Fix
 
-- **plotting**: removes imports of cmcrameri (7bcfc3c)
+- **plotting**: removes imports of cmcrameri (32694c1)
 
 ## v0.1.0 (2025-09-03)
 
