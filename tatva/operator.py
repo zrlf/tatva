@@ -60,18 +60,6 @@ class FormCallable(Protocol[P]):
     ) -> jax.Array: ...
 
 
-class _VmapOverElementsCallable(Protocol):
-    """Internal protocol for functions that are mapped over elements and quadrature points
-    using `Operator._vmap_over_elements_and_quads`."""
-
-    @staticmethod
-    def __call__(
-        xi: jax.Array,
-        el_nodal_values: jax.Array,
-        el_nodal_coords: jax.Array,
-    ) -> jax.Array | float: ...
-
-
 class MappableOverElementsAndQuads(Protocol[P, RT]):
     """Internal protocol for functions that are mapped over elements using
     `Operator.map`."""
@@ -120,7 +108,7 @@ class Operator(Generic[ElementT], eqx.Module):
     element: ElementT
 
     def _vmap_over_elements_and_quads(
-        self, nodal_values: jax.Array, func: _VmapOverElementsCallable
+        self, nodal_values: jax.Array, func: MappableOverElementsAndQuads
     ) -> jax.Array:
         """Helper function. Maps a function over the elements and quadrature points of the
         mesh.
