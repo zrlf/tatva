@@ -15,22 +15,30 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with tatva.  If not, see <https://www.gnu.org/licenses/>.
 
+from typing import TYPE_CHECKING, Literal, Optional
 
-from typing import Literal, Optional, cast
-
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import numpy as np
 from jax import Array
-from matplotlib.axes import Axes
-from matplotlib.collections import PolyCollection
-from matplotlib.tri import Triangulation
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-
-from tatva import Mesh
 
 try:
-    from ._pyvista import get_pyvista_grid
+    import matplotlib.pyplot as plt
+    from matplotlib.collections import PolyCollection
+    from matplotlib.tri import Triangulation
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+except ModuleNotFoundError as exc:
+    raise ModuleNotFoundError(
+        "tatva.plotting requires the optional dependency 'matplotlib'. "
+        "Install it with `pip install tatva[plotting]` or `pip install matplotlib`."
+    ) from exc
+
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
+else:
+    Axes = object
+
+
+try:
+    from ._pyvista import get_pyvista_grid as get_pyvista_grid
 except ImportError:
     get_pyvista_grid = None
 
