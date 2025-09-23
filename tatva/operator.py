@@ -39,7 +39,7 @@ import jax
 import jax.numpy as jnp
 from jax_autovmap import autovmap
 
-from tatva._element import Element
+from tatva.element import Element
 from tatva.mesh import Mesh, find_containing_polygons
 
 # TODO: naming of these types
