@@ -28,6 +28,7 @@ plotting = [
 ]
 dev = [
     "commitizen>=4.9.1",
+    "pytest>=8.4.2",
 ]
 
 [build-system]
