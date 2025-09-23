@@ -6,6 +6,25 @@ All notable changes to this project will be documented here, following
 [Semantic Versioning](https://semver.org/).
 
 
+## v0.3.0 (2025-09-23)
+
+### Feat
+
+- **operator**: mesh and element validation in __post_init__ (0978269)
+- **mesh**: add dimension arg (f730de8)
+- **mesh**: add generation of quad mesh in 2d (d09036a)
+
+### Fix
+
+- **mesh**: add correctly the element type and dim arguments also to rectangle() (42d8951)
+- **plotting**: add import check and verbose error if optional package matplotlib is missing (035ea71)
+- **plotting**: remove personal config + bring simple plot methods up to date (064cda9)
+
+### Refactor
+
+- **operator**: simplify api by removing decorator functionality for integrate, eval, grad (4609bae)
+- **element**: move elements to submodule (a89c875)
+
 ## v0.2.0 (2025-09-22)
 
 ### Feat
