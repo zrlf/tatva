@@ -84,7 +84,7 @@ class Operator(Generic[ElementT], eqx.Module):
 
     mesh: Mesh
     element: ElementT
-    det_J_elements: Array
+    det_J_elements_weights: Array
 
     def __init__(self, mesh: Mesh, element: Element):
         self.mesh = mesh
@@ -94,12 +94,12 @@ class Operator(Generic[ElementT], eqx.Module):
             """Calls the function element.get_jacobian and returns the second output."""
             return self.element.get_jacobian(xi, el_nodal_coords)[1]
 
-        self.det_J_elements = self.map(_get_det_J)(self.mesh.coords)
+        det_J_elements = self.map(_get_det_J)(self.mesh.coords)
         self.det_J_elements_weights = jnp.einsum(
-            "eq,q->eq", self.det_J_elements, self.element.quad_weights
+            "eq,q->eq", det_J_elements, self.element.quad_weights
         )
 
-    def __post_init__(self) -> None:
+    def __check_init__(self) -> None:
         """Validates the mesh and element compatibility. Does a series of checks to ensure
         that the mesh and element are useable together.
 
