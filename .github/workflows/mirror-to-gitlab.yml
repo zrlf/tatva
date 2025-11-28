@@ -25,21 +25,31 @@ jobs:
 
       - name: Create bare mirror of GitHub repo
         env:
-          # GitHub provides this automatically; no need to define a secret
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          # Use a bare repo so we don't have a checked-out branch
+          # Start with a bare repo
           git init --bare mirror.git
           cd mirror.git
 
-          # Add GitHub as origin, authenticated with the workflow token
+          # Add GitHub as origin (authenticated)
           git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
 
-          # Fetch ALL branches into refs/heads/* and ALL tags into refs/tags/*
-          git fetch origin \
-            '+refs/heads/*:refs/heads/*' \
-            '+refs/tags/*:refs/tags/*' \
-            --prune
+          # ❗ Remove any default fetch refspecs (which create refs/remotes/origin/*)
+          git config --unset-all remote.origin.fetch || true
+
+          # ✅ Only fetch:
+          #   - branches into refs/heads/*
+          #   - tags into refs/tags/*
+          git config remote.origin.fetch '+refs/heads/*:refs/heads/*'
+          git config --add remote.origin.fetch '+refs/tags/*:refs/tags/*'
+
+          # Fetch according to the clean refspecs
+          git fetch origin --prune
+
+          # Safety: if any refs/remotes/* exist, delete them
+          git for-each-ref 'refs/remotes/' --format='%(refname)' | while read ref; do
+            git update-ref -d "$ref"
+          done
 
       - name: Push mirror to GitLab
         env:
@@ -50,8 +60,5 @@ jobs:
           # Add GitLab mirror remote
           git remote add gitlab git@gitlab.ethz.ch:smec/tatva-mirror.git
 
-          # Mirror EVERYTHING:
-          # - All branches (refs/heads/*)
-          # - All tags (refs/tags/*)
-          # - Delete refs on GitLab that no longer exist here
+          # Mirror everything (branches + tags) and delete extras on GitLab
           git push gitlab --mirror
