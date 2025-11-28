@@ -3,8 +3,8 @@ name: Mirror to GitLab (SSH)
 on:
   push:
     branches:
-      - "**" # mirror all branches; change to ['main'] if you only want main
-  workflow_dispatch: # allows manual run from the Actions tab
+      - "**"
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -14,20 +14,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # fetch full history so --mirror has all refs
+          fetch-depth: 0 # full history for current branch
+          fetch-tags: true
+
+      - name: Fetch all branches and tags from origin
+        run: |
+          # Fetch all branches and tags explicitly from GitHub
+          git fetch origin "+refs/heads/*:refs/heads/*" --prune
+          git fetch origin --tags --prune
 
       - name: Set up SSH for GitLab
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          # Create .ssh directory with correct permissions
           install -m 700 -d ~/.ssh
-
-          # Write the private key from the secret
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-
-          # Add GitLab host key to known_hosts for strict host checking
           ssh-keyscan gitlab.ethz.ch >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
@@ -36,11 +38,15 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      - name: Mirror to GitLab
+      - name: Push branches and tags to GitLab
         env:
-          # Ensure Git uses our key; not strictly required, but explicit
           GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_ed25519"
         run: |
-          # Replace <group>/<project> with your actual GitLab path
+          # Use your actual GitLab path here
           git remote add mirror git@gitlab.ethz.ch:smec/tatva-mirror.git
-          git push --mirror mirror
+
+          # Push all branches (refs/heads/*), pruning deleted ones
+          git push mirror --prune --all
+
+          # Push all tags, pruning deleted ones
+          git push mirror --prune --tags
