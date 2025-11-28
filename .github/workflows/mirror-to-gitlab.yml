@@ -1,0 +1,46 @@
+name: Mirror to GitLab (SSH)
+
+on:
+  push:
+    branches:
+      - "**" # mirror all branches; change to ['main'] if you only want main
+  workflow_dispatch: # allows manual run from the Actions tab
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # fetch full history so --mirror has all refs
+
+      - name: Set up SSH for GitLab
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          # Create .ssh directory with correct permissions
+          install -m 700 -d ~/.ssh
+
+          # Write the private key from the secret
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          # Add GitLab host key to known_hosts for strict host checking
+          ssh-keyscan gitlab.ethz.ch >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Configure Git identity
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Mirror to GitLab
+        env:
+          # Ensure Git uses our key; not strictly required, but explicit
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_ed25519"
+        run: |
+          # Replace <group>/<project> with your actual GitLab path
+          git remote add mirror git@gitlab.ethz.ch:smec/tatva-mirror.git
+          git push --mirror mirror
