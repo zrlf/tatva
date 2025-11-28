@@ -14,14 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # full history for current branch
+          fetch-depth: 0 # full history for the checked-out branch
           fetch-tags: true
 
       - name: Fetch all branches and tags from origin
         run: |
-          # Fetch all branches and tags explicitly from GitHub
-          git fetch origin "+refs/heads/*:refs/heads/*" --prune
-          git fetch origin --tags --prune
+          # Update remote-tracking branches and tags from GitHub (origin)
+          git fetch origin --prune --tags
 
       - name: Set up SSH for GitLab
         env:
@@ -42,11 +41,15 @@ jobs:
         env:
           GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_ed25519"
         run: |
+          # Make sure we don't fail if the remote already exists
+          git remote remove mirror 2>/dev/null || true
+
           # Use your actual GitLab path here
           git remote add mirror git@gitlab.ethz.ch:smec/tatva-mirror.git
 
-          # Push all branches (refs/heads/*), pruning deleted ones
-          git push mirror --prune --all
+          # Push all branches:
+          #   take origin/* (remote-tracking branches) and map them to heads/* on GitLab
+          git push mirror --prune 'refs/remotes/origin/*:refs/heads/*'
 
-          # Push all tags, pruning deleted ones
+          # Push all tags
           git push mirror --prune --tags
