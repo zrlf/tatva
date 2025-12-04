@@ -50,15 +50,15 @@ class Lifter(equinox.Module):
 
     Args:
         size: Total number of dofs in the full vector.
-        dirichlet_dofs: Dofs fixed by Dirichlet boundary conditions.
+        dirichlet_dofs: Dofs fixed to be 0 by Dirichlet boundary conditions.
         additional_constraints: Extra constraints (e.g., periodic maps).
         **kwargs: Ignored; kept for compatibility with equinox.Module init.
 
     Examples::
 
         lifter = Lifter(
-            size=6,
-            dirichlet_dofs=jnp.array([0, 5]),
+            6,
+            jnp.array([0, 5]),
             PeriodicMap(dofs=jnp.array([2]), master_dofs=jnp.array([1])),
         )
         u_reduced = jnp.array([10.0, 20.0])
@@ -87,6 +87,7 @@ class Lifter(equinox.Module):
         self,
         size: int,
         dirichlet_dofs: Array,
+        /,
         *additional_constraints: Constraint,
         **kwargs,
     ):
