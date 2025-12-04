@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from collections.abc import Hashable
+from abc import ABC
 from dataclasses import dataclass
 from typing import Self
 
 import equinox
 import jax.numpy as jnp
-import numpy as np
 from jax import Array
 
 
-class Constraint(Hashable):
+class Constraint(ABC):
     """Abstract base class for conditions applied during lifting.
 
     Subclasses define how constrained degrees of freedom (dofs) are enforced
@@ -19,6 +18,9 @@ class Constraint(Hashable):
 
     dofs: Array
     """The constrained dofs (an array of integer indices)."""
+
+    def __hash__(self):
+        return hash((type(self), tuple(self.dofs.tolist())))
 
     def apply_lift(self, u_full: Array) -> Array:  # override in subclasses
         """Apply the constraint to a full vector and return the modified copy."""
@@ -35,10 +37,16 @@ class PeriodicMap(Constraint):
         return u_full.at[self.dofs].set(u_full[self.master_dofs])
 
 
-@dataclass
 class DirichletBC(Constraint):
     dofs: Array
     values: Array
+
+    def __init__(self, dofs: Array, values: Array | None = None):
+        self.dofs = dofs
+        if values is None:
+            self.values = jnp.zeros(dofs.shape, dtype=jnp.float64)
+        else:
+            self.values = values
 
     def apply_lift(self, u_full: Array) -> Array:
         """Set constrained ``dofs`` to fixed ``values``."""
@@ -50,20 +58,19 @@ class Lifter(equinox.Module):
 
     Args:
         size: Total number of dofs in the full vector.
-        dirichlet_dofs: Dofs fixed to be 0 by Dirichlet boundary conditions.
-        additional_constraints: Extra constraints (e.g., periodic maps).
+        *constraints: Extra constraints (e.g., periodic maps).
         **kwargs: Ignored; kept for compatibility with equinox.Module init.
 
     Examples::
 
         lifter = Lifter(
             6,
-            jnp.array([0, 5]),
+            DirichletBC(jnp.array([0, 5])),
             PeriodicMap(dofs=jnp.array([2]), master_dofs=jnp.array([1])),
         )
-        u_reduced = jnp.array([10.0, 20.0])
+        u_reduced = jnp.array([10.0, 20.0, 30.0])
         u_full = lifter.lift_from_null(u_reduced)
-        # u_full -> [0., 10., 10., 20., 0., 0.]
+        # u_full -> [0., 10., 10., 20., 30., 0.]
         u_reduced_back = lifter.reduce(u_full)
 
     """
@@ -86,25 +93,30 @@ class Lifter(equinox.Module):
     def __init__(
         self,
         size: int,
-        dirichlet_dofs: Array,
         /,
-        *additional_constraints: Constraint,
+        *constraints: Constraint,
         **kwargs,
     ):
         self.size = size
-        self.constraints = additional_constraints
+        self.constraints = constraints
 
-        self._compute_sizes(dirichlet_dofs)
+        self._compute_sizes()
 
     def __hash__(self):
-        return hash(self.constraints)
+        return hash((self.size, self.constraints))
 
-    def _compute_sizes(self, dirichlet_dofs: Array):
+    def _compute_sizes(self):
         """Compute free/constrained dofs and reduced size."""
         all_dofs = jnp.arange(self.size)
-        constrained = jnp.concatenate(
-            [dirichlet_dofs] + [cond.dofs for cond in self.constraints]
-        )
+
+        if not self.constraints:
+            # base case: no constraints
+            self.free_dofs = all_dofs
+            self.constrained_dofs = jnp.array([], dtype=jnp.int32)
+            self.size_reduced = self.size
+            return
+
+        constrained = jnp.concatenate([cond.dofs for cond in self.constraints])
         constrained = jnp.unique(constrained)
         free = jnp.setdiff1d(all_dofs, constrained, assume_unique=True)
 
@@ -114,9 +126,7 @@ class Lifter(equinox.Module):
 
     def add(self, condition: Constraint) -> Self:
         """Return a new lifter with ``condition`` appended to constraints."""
-        return equinox.tree_at(
-            lambda lf: lf.constraints, self, self.constraints + (condition,)
-        )
+        return self.__class__(self.size, *self.constraints, condition)
 
     def lift(self, u_reduced: Array, u_full: Array) -> Array:
         """Lift reduced displacement vector to full size.
@@ -129,16 +139,12 @@ class Lifter(equinox.Module):
             Full vector with free dofs set to ``u_reduced`` and constraints
             applied (Dirichlet, periodic, etc.).
         """
-        assert u_reduced.shape[0] == self.size_reduced, (
-            f"Reduced displacement vector has incorrect size: "
-            f"expected {self.size_reduced}, got {u_reduced.shape[0]}"
-        )
         u_full = u_full.at[self.free_dofs].set(u_reduced)
         for condition in self.constraints:
             u_full = condition.apply_lift(u_full)
         return u_full
 
-    def lift_from_null(self, u_reduced: Array) -> Array:
+    def lift_from_zeros(self, u_reduced: Array) -> Array:
         """Lift reduced vector to a full vector starting from zeros."""
         u_full = jnp.zeros(self.size, dtype=u_reduced.dtype)
         return self.lift(u_reduced, u_full)
