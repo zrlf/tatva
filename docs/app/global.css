@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "fumadocs-python-autodoc/preset.css";
+@import "fumadocs-ui/css/preset.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "./theme.css";
+
+@source '../content/**/*.{md,mdx}';
+@source './**/*.{tsx}';
+
+/* Theme Variables */
+@theme inline {
+  /* Fumadocs colors mapping */
+  --color-primary: var(--color-fd-primary);
+  --color-primary-foreground: var(--color-fd-primary-foreground);
+  --color-secondary: var(--color-fd-secondary);
+  --color-secondary-foreground: var(--color-fd-secondary-foreground);
+  --color-accent: var(--color-fd-accent);
+  --color-accent-foreground: var(--color-fd-accent-foreground);
+  --color-muted: var(--color-fd-muted);
+  --color-muted-foreground: var(--color-fd-muted-foreground);
+  --color-border: var(--color-fd-border);
+  --color-background: var(--color-fd-background);
+  --color-card: var(--color-fd-card);
+  --color-card-foreground: var(--color-fd-card-foreground);
+  --color-popover: var(--color-fd-popover);
+  --color-popover-foreground: var(--color-fd-popover-foreground);
+  --color-ring: var(--color-fd-ring);
+
+  /* Own color utilities */
+  --color-route-api: var(--tatva-color);
+  --color-route-docs: var(--tatva-color);
+  --color-route-tui: var(--tc-blue);
+
+  /* Fumadocs Python API package colors */
+  --color-fdpy-func: var(--tc-green);
+  --color-fdpy-class: var(--tc-rose);
+  --color-fdpy-meth: var(--tc-blue);
+}
+
+@theme {
+  --margin-indent: 1rem;
+  --margin-indent2: 1rem;
+}
+
+:root {
+  --tc-rose: hsl(19, 90%, 55%);
+  --tc-green: hsl(83, 34%, 43%);
+  --tc-blue: hsl(210, 70%, 50%);
+  --tatva-color: hsl(340, 65%, 47%);
+
+  --color-fd-primary: var(--tatva-color);
+}
+
+.dark {
+  --tc-rose: hsl(19, 90%, 80%);
+  --tc-green: hsl(83, 34%, 63%);
+  --tc-blue: hsl(210, 70%, 70%);
+  --tatva-color: hsl(340, 65%, 67%);
+}
+
+aside#nd-sidebar {
+  /* @apply bg-fd-background; */
+}
+
+.route-docs {
+  --color-fd-primary: var(--tatva-color);
+}
+
+.route-fumapy {
+  --color-fd-primary: var(--tatva-color);
+}
+
+/* Base Layer Adjustments */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :target {
+    @apply scroll-mt-28;
+  }
+
+  h5 {
+    @apply text-base pr-2 font-bold text-muted-foreground mt-6;
+  }
+
+  h6 {
+    @apply text-base font-semibold;
+  }
+
+  .divider {
+    @apply flex gap-4 items-center relative pb-2 !text-xl !text-muted-foreground;
+    @apply after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border;
+  }
+}
+
+/* Code Styling */
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+.cell-output-stdout {
+  @apply relative text-sm;
+
+  /* &::before { */
+  /*   @apply text-fd-muted-foreground backdrop-blur px-2; */
+  /*   content: "output"; */
+  /*   position: absolute; */
+  /*   top: 0; */
+  /*   left: 1em; */
+  /*   transform: translateY(-55%); */
+  /*   z-index: 1; */
+  /* } */
+
+  .cell-output-html {
+    @apply overflow-auto;
+  }
+
+  table {
+    all: revert;
+    @apply border-collapse border-0 [&_*]:border-0 [&_*]:py-1 [&_*]:px-2;
+    @apply whitespace-pre;
+
+    & tr:nth-child(even) {
+      @apply bg-fd-foreground/5;
+    }
+  }
+
+  .manager .logo {
+    @apply min-h-20 min-w-20;
+  }
+
+  .manager .m_id h1 {
+    @apply text-lg;
+  }
+}
+
+code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+code:not(.inline-code) .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1rem;
+  margin-right: 1.5rem;
+  display: inline-block;
+  text-align: right;
+  color: rgba(115, 138, 148, 0.4);
+}
