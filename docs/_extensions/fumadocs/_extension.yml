@@ -6,7 +6,7 @@ contributes:
     project:
       type: default
       detect:
-        - ["package.json", "source.config.ts"]
+        - ["pyproject.toml"]
       render:
         - "**/*.qmd"
         - "**/*.ipynb"

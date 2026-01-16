@@ -1,7 +1,7 @@
 {
   "name": "tatva",
   "path": "tatva",
-  "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/__init__.py",
+  "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/__init__.py",
   "description": null,
   "docstring": [],
   "attributes": [],
@@ -9,7 +9,7 @@
     "element": {
       "name": "element",
       "path": "tatva.element",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/element/__init__.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/element/__init__.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -17,7 +17,7 @@
         "base": {
           "name": "base",
           "path": "tatva.element.base",
-          "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/element/base.py",
+          "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/element/base.py",
           "description": null,
           "docstring": [],
           "attributes": [],
@@ -898,7 +898,7 @@
     "operator": {
       "name": "operator",
       "path": "tatva.operator",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/operator.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/operator.py",
       "description": null,
       "docstring": [],
       "attributes": [
@@ -1536,7 +1536,7 @@
     "lifter": {
       "name": "lifter",
       "path": "tatva.lifter",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/lifter.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/lifter.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -2147,7 +2147,7 @@
     "sparse": {
       "name": "sparse",
       "path": "tatva.sparse",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/sparse.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/sparse.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -2380,7 +2380,7 @@
     "compound": {
       "name": "compound",
       "path": "tatva.compound",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/compound.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/compound.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -3228,7 +3228,7 @@
     "mesh": {
       "name": "mesh",
       "path": "tatva.mesh",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/mesh.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/mesh.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -3534,7 +3534,7 @@
     "plotting": {
       "name": "plotting",
       "path": "tatva.plotting",
-      "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/plotting/__init__.py",
+      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/plotting/__init__.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -3542,7 +3542,7 @@
         "_pyvista": {
           "name": "_pyvista",
           "path": "tatva.plotting._pyvista",
-          "filepath": "/home/florez/work/code/tatva-docs/.venv/lib/python3.14/site-packages/tatva/plotting/_pyvista.py",
+          "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/plotting/_pyvista.py",
           "description": null,
           "docstring": [],
           "attributes": [],

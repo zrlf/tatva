@@ -1,16 +1,14 @@
 {
-  "name": "bamboost",
-  "version": "0.3.0",
+  "name": "tatva-docs",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
-    "quarto-build": "mkdir -p .docs/ && rm -r .docs/** && bash content/_scripts/copyMdx.sh content/docs .docs/docs && quarto render content --execute",
     "build": "next build",
-    "dev": "concurrently \"node content/_scripts/watchMdx.js\" \"quarto preview content\"",
+    "dev": "next dev --turbo",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
-    "sync-oramacloud": "node --env-file=.env scripts/update-orama.ts",
-    "create-source": "tsx fumapy/create-source.ts"
+    "sync-oramacloud": "node --env-file=.env scripts/update-orama.ts"
   },
   "dependencies": {
     "@orama/core": "^1.2.16",

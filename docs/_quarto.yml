@@ -1,0 +1,12 @@
+project:
+  type: fumadocs
+  output-dir: _website/.docs
+  render:
+    - "index.md"
+    - "docs/**/*.qmd"
+    - "docs/**/*.ipynb"
+    - "docs/**/*.md"
+
+format:
+  fumadocs-md:
+    extensions: [mdx]
