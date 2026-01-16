@@ -1,7 +1,7 @@
 {
   "name": "tatva",
   "path": "tatva",
-  "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/__init__.py",
+  "filepath": "/home/florez/work/code/tatva-fork/tatva/__init__.py",
   "description": null,
   "docstring": [],
   "attributes": [],
@@ -9,7 +9,7 @@
     "element": {
       "name": "element",
       "path": "tatva.element",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/element/__init__.py",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/element/__init__.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -17,7 +17,7 @@
         "base": {
           "name": "base",
           "path": "tatva.element.base",
-          "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/element/base.py",
+          "filepath": "/home/florez/work/code/tatva-fork/tatva/element/base.py",
           "description": null,
           "docstring": [],
           "attributes": [],
@@ -895,1492 +895,10 @@
       "classes": {},
       "functions": {}
     },
-    "operator": {
-      "name": "operator",
-      "path": "tatva.operator",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/operator.py",
-      "description": null,
-      "docstring": [],
-      "attributes": [
-        {
-          "name": "P",
-          "annotation": null,
-          "description": null,
-          "value": "ParamSpec('P')"
-        },
-        {
-          "name": "RT",
-          "annotation": null,
-          "description": null,
-          "value": "TypeVar('RT', bound=(jax.Array | tuple), covariant=True)"
-        },
-        {
-          "name": "ElementT",
-          "annotation": null,
-          "description": null,
-          "value": "TypeVar('ElementT', bound=Element)"
-        },
-        {
-          "name": "Numeric",
-          "annotation": "typing.TypeAlias",
-          "description": null,
-          "value": "float | int | jax.numpy.jax.numpy.number"
-        },
-        {
-          "name": "MappableOverElements",
-          "annotation": "typing.TypeAlias",
-          "description": null,
-          "value": "typing.Callable[tatva.operator.P, tatva.operator.RT]"
-        }
-      ],
-      "modules": {},
-      "classes": {
-        "MappableOverElementsAndQuads": {
-          "name": "MappableOverElementsAndQuads",
-          "path": "tatva.operator.MappableOverElementsAndQuads",
-          "description": "Internal protocol for functions that are mapped over elements using\n`Operator.map`.",
-          "parameters": [],
-          "attributes": [],
-          "docstring": [],
-          "functions": {
-            "__call__": {
-              "name": "__call__",
-              "path": "tatva.operator.MappableOverElementsAndQuads.__call__",
-              "signature": "(xi, *el_values, **el_kwargs) -> RT",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "xi",
-                  "annotation": "jax.jax.Array",
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "el_values",
-                  "annotation": "tatva.operator.P.tatva.operator.P.args",
-                  "description": null,
-                  "value": "()"
-                },
-                {
-                  "name": "el_kwargs",
-                  "annotation": "tatva.operator.P.tatva.operator.P.kwargs",
-                  "description": null,
-                  "value": "{}"
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "@staticmethod\ndef __call__(\n    xi: jax.Array,\n    *el_values: P.args,\n    **el_kwargs: P.kwargs,\n) -> RT: ..."
-            }
-          },
-          "source": "class MappableOverElementsAndQuads(Protocol[P, RT]):\n    \"\"\"Internal protocol for functions that are mapped over elements using\n    `Operator.map`.\"\"\"\n\n    @staticmethod\n    def __call__(\n        xi: jax.Array,\n        *el_values: P.args,\n        **el_kwargs: P.kwargs,\n    ) -> RT: ...",
-          "inherited_members": {}
-        },
-        "MappedCallable": {
-          "name": "MappedCallable",
-          "path": "tatva.operator.MappedCallable",
-          "description": null,
-          "parameters": [],
-          "attributes": [],
-          "docstring": [],
-          "functions": {
-            "__call__": {
-              "name": "__call__",
-              "path": "tatva.operator.MappedCallable.__call__",
-              "signature": "(*args, **kwargs) -> RT",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "args",
-                  "annotation": "tatva.operator.P.tatva.operator.P.args",
-                  "description": null,
-                  "value": "()"
-                },
-                {
-                  "name": "kwargs",
-                  "annotation": "tatva.operator.P.tatva.operator.P.kwargs",
-                  "description": null,
-                  "value": "{}"
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "@staticmethod\ndef __call__(\n    *args: P.args,\n    **kwargs: P.kwargs,\n) -> RT: ..."
-            }
-          },
-          "source": "class MappedCallable(Protocol[P, RT]):\n    @staticmethod\n    def __call__(\n        *args: P.args,\n        **kwargs: P.kwargs,\n    ) -> RT: ...",
-          "inherited_members": {}
-        },
-        "Operator": {
-          "name": "Operator",
-          "path": "tatva.operator.Operator",
-          "description": "A class that provides an Operator for finite element method (FEM) assembly.",
-          "parameters": [
-            {
-              "name": "self",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "mesh",
-              "annotation": "tatva.mesh.Mesh",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "The mesh containing the elements and nodes."
-                }
-              ]
-            },
-            {
-              "name": "element",
-              "annotation": "tatva.element.Element",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "The element type used for the finite element method."
-                }
-              ]
-            }
-          ],
-          "attributes": [
-            {
-              "name": "mesh",
-              "annotation": "tatva.mesh.Mesh",
-              "description": null,
-              "value": "tatva.operator.Operator(mesh)"
-            },
-            {
-              "name": "element",
-              "annotation": "tatva.operator.ElementT",
-              "description": null,
-              "value": "tatva.operator.Operator(element)"
-            },
-            {
-              "name": "det_J_elements_weights",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": "jnp.einsum('eq,q->eq', det_J_elements, self.element.quad_weights)"
-            }
-          ],
-          "docstring": [
-            {
-              "kind": "text",
-              "value": "Provides several operators for evaluating and integrating functions over the mesh,\nsuch as `integrate`, `eval`, and `grad`. These operators can be used to compute\nintegrals, evaluate functions at quadrature points, and compute gradients of\nfunctions at quadrature points."
-            },
-            {
-              "kind": "admonition",
-              "value": {
-                "annotation": "example",
-                "description": ">>> from tatva import Mesh, Tri3, Operator\n>>> mesh = Mesh.unit_square(10, 10)  # Create a mesh\n>>> element = Tri3()  # Define an element type\n>>> operator = Operator(mesh, element)\n>>> nodal_values = jnp.array(...)  # Nodal values at the mesh nodes\n>>> energy = operator.integrate(energy_density)(nodal_values)"
-              },
-              "title": "Example"
-            }
-          ],
-          "functions": {
-            "__init__": {
-              "name": "__init__",
-              "path": "tatva.operator.Operator.__init__",
-              "signature": "(self, mesh, element)",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "mesh",
-                  "annotation": "tatva.mesh.Mesh",
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "element",
-                  "annotation": "tatva.element.Element",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def __init__(self, mesh: Mesh, element: Element):\n    self.mesh = mesh\n    self.element = element\n\n    def _get_det_J(xi: jax.Array, el_nodal_coords: jax.Array) -> jax.Array:\n        \"\"\"Calls the function element.get_jacobian and returns the second output.\"\"\"\n        return self.element.get_jacobian(xi, el_nodal_coords)[1]\n\n    det_J_elements = self.map(_get_det_J)(self.mesh.coords)\n    self.det_J_elements_weights = jnp.einsum(\n        \"eq,q->eq\", det_J_elements, self.element.quad_weights\n    )"
-            },
-            "__check_init__": {
-              "name": "__check_init__",
-              "path": "tatva.operator.Operator.__check_init__",
-              "signature": "(self) -> None",
-              "description": "Validates the mesh and element compatibility. Does a series of checks to ensure\nthat the mesh and element are useable together.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [
-                {
-                  "kind": "raises",
-                  "value": [
-                    {
-                      "annotation": "ValueError",
-                      "description": "If the mesh or element are not compatible."
-                    },
-                    {
-                      "annotation": "TypeError",
-                      "description": "If the mesh element connectivity is not of integer type."
-                    }
-                  ]
-                }
-              ],
-              "source": "def __check_init__(self) -> None:\n    \"\"\"Validates the mesh and element compatibility. Does a series of checks to ensure\n    that the mesh and element are useable together.\n\n    Raises:\n        ValueError: If the mesh or element are not compatible.\n        TypeError: If the mesh element connectivity is not of integer type.\n    \"\"\"\n    coords = self.mesh.coords\n    elements = self.mesh.elements\n    quad_points = self.element.quad_points\n\n    if coords.ndim != 2:\n        raise ValueError(\n            \"Mesh coordinates must be a 2D array shaped (n_nodes, n_dim).\"\n        )\n    if coords.shape[0] == 0:\n        raise ValueError(\"Mesh must contain at least one node.\")\n\n    if elements.ndim != 2:\n        raise ValueError(\n            \"Mesh elements must be a 2D array shaped (n_elements, n_nodes_per_element).\"\n        )\n    if elements.shape[0] == 0:\n        raise ValueError(\"Mesh must contain at least one element.\")\n    if not jnp.issubdtype(elements.dtype, jnp.integer):\n        raise TypeError(\"Mesh element connectivity must contain integer indices.\")\n\n    if quad_points.ndim != 2 or quad_points.shape[0] == 0:\n        raise ValueError(\n            \"Element must define at least one quadrature point in an (n_q, n_dim) array.\"\n        )\n\n    local_dim = quad_points.shape[1]\n    global_dim = coords.shape[1]\n    if local_dim > 1 and local_dim != global_dim:\n        raise ValueError(\n            f\"Element {self.element.__class__.__name__} expects {local_dim}D coordinates but mesh provides {global_dim}D nodes.\"\n        )\n    if local_dim == 0:\n        raise ValueError(\"Element must have a positive number of local dimensions.\")\n\n    n_nodes_per_element = elements.shape[1]\n    shape_fn = np.asarray(self.element.shape_function(self.element.quad_points[0]))\n    if shape_fn.ndim != 1:\n        raise ValueError(\n            \"Element shape function must return a 1D array of nodal weights.\"\n        )\n    if shape_fn.shape[0] != n_nodes_per_element:\n        raise ValueError(\n            f\"Mesh connectivity lists {n_nodes_per_element} nodes per element but {self.element.__class__.__name__} expects {shape_fn.shape[0]}.\"\n        )\n\n    flat_elements = elements.ravel()\n    if flat_elements.min() < 0:\n        raise ValueError(\n            \"Mesh element connectivity contains negative node indices.\"\n        )\n    if flat_elements.max() >= coords.shape[0]:\n        raise ValueError(\n            \"Mesh element connectivity references nodes outside the mesh coordinates array.\"\n        )"
-            },
-            "_vmap_over_elements_and_quads": {
-              "name": "_vmap_over_elements_and_quads",
-              "path": "tatva.operator.Operator._vmap_over_elements_and_quads",
-              "signature": "(self, nodal_values, func) -> jax.Array",
-              "description": "Helper function. Maps a function over the elements and quadrature points of the\nmesh.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "nodal_values",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
-                    }
-                  ]
-                },
-                {
-                  "name": "func",
-                  "annotation": "tatva.operator.MappableOverElementsAndQuads",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The function to map over the elements and quadrature points."
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A jax.Array with the results of the function applied at each quadrature point"
-              },
-              "docstring": [],
-              "source": "def _vmap_over_elements_and_quads(\n    self, nodal_values: jax.Array, func: MappableOverElementsAndQuads\n) -> jax.Array:\n    \"\"\"Helper function. Maps a function over the elements and quadrature points of the\n    mesh.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n        func: The function to map over the elements and quadrature points.\n\n    Returns:\n        A jax.Array with the results of the function applied at each quadrature point\n        of each element (shape: (n_elements, n_quad_points, n_values)).\n    \"\"\"\n\n    def _at_each_element(\n        el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        return eqx.filter_vmap(\n            partial(\n                func,\n                el_nodal_values=el_nodal_values,\n                el_nodal_coords=el_nodal_coords,\n            )\n        )(self.element.quad_points)\n\n    return eqx.filter_vmap(\n        _at_each_element,\n        in_axes=(0, 0),\n    )(nodal_values[self.mesh.elements], self.mesh.coords[self.mesh.elements])"
-            },
-            "map": {
-              "name": "map",
-              "path": "tatva.operator.Operator.map",
-              "signature": "(self, func, *, element_quantity=()) -> MappedCallable[P, RT]",
-              "description": "Maps a function over the elements and quad points of the mesh.\n\nReturns a function that takes values at nodal points (globally) and returns the\nvmapped result over the elements and quad points.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "func",
-                  "annotation": "tatva.operator.MappableOverElementsAndQuads[tatva.operator.P, tatva.operator.RT]",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The function to map over the elements and quadrature points."
-                    }
-                  ]
-                },
-                {
-                  "name": "element_quantity",
-                  "annotation": "collections.abc.Sequence[int]",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "Indices of the arguments of `func` that are quantities\ndefined per element. The rest of the arguments are assumed to be defined\nat nodal points."
-                    }
-                  ],
-                  "value": "()"
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def map(\n    self,\n    func: MappableOverElementsAndQuads[P, RT],\n    *,\n    element_quantity: Sequence[int] = (),\n) -> MappedCallable[P, RT]:\n    \"\"\"Maps a function over the elements and quad points of the mesh.\n\n    Returns a function that takes values at nodal points (globally) and returns the\n    vmapped result over the elements and quad points.\n\n    Args:\n        func: The function to map over the elements and quadrature points.\n        element_quantity: Indices of the arguments of `func` that are quantities\n            defined per element. The rest of the arguments are assumed to be defined\n            at nodal points.\n    \"\"\"\n\n    def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n        # values should be arrays!\n        _values = cast(tuple[jax.Array, ...], values)\n\n        def _at_each_element(*el_values) -> jax.Array:\n            return eqx.filter_vmap(\n                lambda xi: func(xi, *el_values, **kwargs),\n            )(self.element.quad_points)\n\n        return eqx.filter_vmap(\n            _at_each_element,\n            in_axes=(0,) * len(values),\n        )(\n            *(\n                v[self.mesh.elements] if i not in element_quantity else v\n                for i, v in enumerate(_values)\n            )\n        )\n\n    return _mapped"
-            },
-            "map_over_elements": {
-              "name": "map_over_elements",
-              "path": "tatva.operator.Operator.map_over_elements",
-              "signature": "(self, func, *, element_quantity=()) -> MappedCallable[P, RT]",
-              "description": "Maps a function over the elements of the mesh.\n\nReturns a function that takes values at nodal points (globally) and returns the\nvmapped result over the elements.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "func",
-                  "annotation": "tatva.operator.MappableOverElements[tatva.operator.P, tatva.operator.RT]",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The function to map over the elements."
-                    }
-                  ]
-                },
-                {
-                  "name": "element_quantity",
-                  "annotation": "collections.abc.Sequence[int]",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "Indices of the arguments of `func` that are quantities\ndefined per element. The rest of the arguments are assumed to be defined\nat nodal points."
-                    }
-                  ],
-                  "value": "()"
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def map_over_elements(\n    self,\n    func: MappableOverElements[P, RT],\n    *,\n    element_quantity: Sequence[int] = (),\n) -> MappedCallable[P, RT]:\n    \"\"\"Maps a function over the elements of the mesh.\n\n    Returns a function that takes values at nodal points (globally) and returns the\n    vmapped result over the elements.\n\n    Args:\n        func: The function to map over the elements.\n        element_quantity: Indices of the arguments of `func` that are quantities\n            defined per element. The rest of the arguments are assumed to be defined\n            at nodal points.\n    \"\"\"\n\n    def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n        # values should be arrays!\n        _values = cast(tuple[jax.Array, ...], values)\n\n        def _at_each_element(*el_values) -> RT:\n            return func(*el_values, **kwargs)\n\n        return eqx.filter_vmap(\n            _at_each_element,\n            in_axes=(0,) * len(values),\n        )(\n            *(\n                v[self.mesh.elements] if i not in element_quantity else v\n                for i, v in enumerate(_values)\n            )\n        )\n\n    return _mapped"
-            },
-            "integrate": {
-              "name": "integrate",
-              "path": "tatva.operator.Operator.integrate",
-              "signature": "(self, arg) -> jax.Array",
-              "description": "Integrate a nodal_array, quad_array, or numeric value over the mesh.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "arg",
-                  "annotation": "jax.jax.Array | tatva.operator.Numeric",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "An array of nodal values (shape: (n_nodes, n_values)), an array of\nquadrature values (shape: (n_elements, n_quad_points, n_values)), or a\nnumeric value (float or int)."
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "The integral of the nodal values or quadrature values over the mesh."
-              },
-              "docstring": [],
-              "source": "def integrate(self, arg: jax.Array | Numeric) -> jax.Array:\n    \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh.\n\n    Args:\n        arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n            quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n            numeric value (float or int).\n\n    Returns:\n        The integral of the nodal values or quadrature values over the mesh.\n    \"\"\"\n    res = self.integrate_per_element(arg)\n    return jnp.sum(res, axis=(0,))  # Sum over elements and quadrature points"
-            },
-            "integrate_per_element": {
-              "name": "integrate_per_element",
-              "path": "tatva.operator.Operator.integrate_per_element",
-              "signature": "(self, arg) -> jax.Array",
-              "description": "Integrate a nodal_array, quad_array, or numeric value over the mesh. Returning the\nintegral per element.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "arg",
-                  "annotation": "jax.jax.Array | tatva.operator.Numeric",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "An array of nodal values (shape: (n_nodes, n_values)), an array of\nquadrature values (shape: (n_elements, n_quad_points, n_values)), or a\nnumeric value (float or int)."
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A `jax.Array` where each element contains the integral of the values in the"
-              },
-              "docstring": [],
-              "source": "def integrate_per_element(self, arg: jax.Array | Numeric) -> jax.Array:\n    \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh. Returning the\n    integral per element.\n\n    Args:\n        arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n            quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n            numeric value (float or int).\n\n    Returns:\n        A `jax.Array` where each element contains the integral of the values in the\n        element (shape: (n_elements, n_values)).\n    \"\"\"\n    if isinstance(arg, Numeric):\n        res = self._integrate_quad_array(self.eval(jnp.array([arg])))\n    elif arg.shape[0] == self.mesh.elements.shape[0]:  # element field\n        res = self._integrate_quad_array(arg)\n    else:  # nodal field\n        field_at_quads = self.eval(arg)\n        res = self._integrate_quad_array(field_at_quads)\n\n    return res"
-            },
-            "_integrate_quad_array": {
-              "name": "_integrate_quad_array",
-              "path": "tatva.operator.Operator._integrate_quad_array",
-              "signature": "(self, quad_values) -> jax.Array",
-              "description": "Integrates a given array of values at quadrature points over the mesh.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "quad_values",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The values at the quadrature points\n(shape: (n_elements, n_quad_points, n_values))"
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A `jax.Array` where each element contains the integral of the values in the"
-              },
-              "docstring": [],
-              "source": "def _integrate_quad_array(self, quad_values: jax.Array) -> jax.Array:\n    \"\"\"Integrates a given array of values at quadrature points over the mesh.\n\n    Args:\n        quad_values: The values at the quadrature points\n            (shape: (n_elements, n_quad_points, n_values))\n\n    Returns:\n        A `jax.Array` where each element contains the integral of the values in the\n        element (shape: (n_elements, n_values)).\n    \"\"\"\n\n    return jnp.einsum(\"eq...,eq->e...\", quad_values, self.det_J_elements_weights)"
-            },
-            "eval": {
-              "name": "eval",
-              "path": "tatva.operator.Operator.eval",
-              "signature": "(self, nodal_values) -> jax.Array",
-              "description": "Evaluates the nodal values at the quadrature points.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "nodal_values",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A `jax.Array` with the values of the nodal values at each quadrature point of"
-              },
-              "docstring": [],
-              "source": "def eval(self, nodal_values: jax.Array) -> jax.Array:\n    \"\"\"Evaluates the nodal values at the quadrature points.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n    Returns:\n        A `jax.Array` with the values of the nodal values at each quadrature point of\n        each element (shape: (n_elements, n_quad_points, n_values)).\n    \"\"\"\n\n    def _eval_quad(\n        xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n        return self.element.interpolate(xi, el_nodal_values)\n\n    return self._vmap_over_elements_and_quads(nodal_values, _eval_quad)"
-            },
-            "grad": {
-              "name": "grad",
-              "path": "tatva.operator.Operator.grad",
-              "signature": "(self, nodal_values) -> jax.Array",
-              "description": "Computes the gradient of the nodal values at the quad points.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "nodal_values",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A `jax.Array` with the gradient of the nodal values at each quadrature point"
-              },
-              "docstring": [],
-              "source": "def grad(self, nodal_values: jax.Array) -> jax.Array:\n    \"\"\"Computes the gradient of the nodal values at the quad points.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n    Returns:\n        A `jax.Array` with the gradient of the nodal values at each quadrature point\n        of each element (shape: (n_elements, n_quad_points, n_values, n_dim)).\n    \"\"\"\n\n    def _gradient_quad(\n        xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        \"\"\"Calls the function (gradient) on a quad point.\"\"\"\n        u_grad = self.element.gradient(xi, el_nodal_values, el_nodal_coords)\n        return u_grad\n\n    return self._vmap_over_elements_and_quads(nodal_values, _gradient_quad)"
-            },
-            "interpolate": {
-              "name": "interpolate",
-              "path": "tatva.operator.Operator.interpolate",
-              "signature": "(self, arg, points) -> jax.Array",
-              "description": "Interpolates nodal values to a set of points in the physical space.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "arg",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The nodal values to interpolate."
-                    }
-                  ]
-                },
-                {
-                  "name": "points",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The points to interpolate the function or nodal values to."
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A `jax.Array` with the interpolated values at the given points."
-              },
-              "docstring": [],
-              "source": "def interpolate(self, arg: jax.Array, points: jax.Array) -> jax.Array:\n    \"\"\"Interpolates nodal values to a set of points in the physical space.\n\n    Args:\n        arg: The nodal values to interpolate.\n        points: The points to interpolate the function or nodal values to.\n\n    Returns:\n        A `jax.Array` with the interpolated values at the given points.\n    \"\"\"\n\n    @jax.jit\n    def compute_rhs(point: jax.Array, nodal_coords: jax.Array) -> jax.Array:\n        xi0 = self.element.quad_points[0]\n        x0, _, _ = self.element.get_local_values(xi0, nodal_coords, nodal_coords)\n        return x0 - point\n\n    @jax.jit\n    def compute_lhs(nodal_coords: jax.Array) -> jax.Array:\n        dfdxi = jax.jacrev(self.element.get_local_values)\n        return dfdxi(self.element.quad_points[0], nodal_coords, nodal_coords)[0]\n\n    @autovmap(point=1, nodal_coords=2)\n    def _map_physical_to_reference(\n        point: jax.Array, nodal_coords: jax.Array\n    ) -> jax.Array:\n        rhs = compute_rhs(point, nodal_coords)\n        lhs = compute_lhs(nodal_coords)\n        delta_xi = jnp.linalg.solve(lhs, -rhs)\n        return self.element.quad_points[0] + delta_xi\n\n    def map_physical_to_reference(points: jax.Array) -> tuple[jax.Array, jax.Array]:\n        element_indices = find_containing_polygons(\n            points, self.mesh.coords[self.mesh.elements]\n        )\n        valid_indices = element_indices != -1\n        return (\n            _map_physical_to_reference(\n                points[valid_indices],\n                self.mesh.coords[\n                    self.mesh.elements[element_indices[valid_indices]]\n                ],\n            ),\n            self.mesh.elements[element_indices[valid_indices]],\n        )\n\n    valid_quad_points, valid_elements = map_physical_to_reference(points)\n\n    if valid_quad_points.shape[0] != points.shape[0]:\n        raise RuntimeError(\"Some points are outside the mesh, revise the points\")\n\n    return self._interpolate_direct(arg, valid_quad_points, valid_elements)"
-            },
-            "_interpolate_direct": {
-              "name": "_interpolate_direct",
-              "path": "tatva.operator.Operator._interpolate_direct",
-              "signature": "(self, nodal_values, valid_quad_points, valid_elements) -> jax.Array",
-              "description": "Interpolates the given nodal values at the quad points.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "nodal_values",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
-                    }
-                  ]
-                },
-                {
-                  "name": "valid_quad_points",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The quadrature points in the reference element\n(shape: (n_valid_points, n_dim))"
-                    }
-                  ]
-                },
-                {
-                  "name": "valid_elements",
-                  "annotation": "jax.jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "The indices of the elements containing the quadrature points\n(shape: (n_valid_points,))"
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.jax.Array",
-                "description": "A `jax.Array` with the values of the nodal values at each quadrature point of"
-              },
-              "docstring": [],
-              "source": "def _interpolate_direct(\n    self,\n    nodal_values: jax.Array,\n    valid_quad_points: jax.Array,\n    valid_elements: jax.Array,\n) -> jax.Array:\n    \"\"\"Interpolates the given nodal values at the quad points.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n        valid_quad_points: The quadrature points in the reference element\n            (shape: (n_valid_points, n_dim))\n        valid_elements: The indices of the elements containing the quadrature points\n            (shape: (n_valid_points,))\n\n    Returns:\n        A `jax.Array` with the values of the nodal values at each quadrature point of\n        each element (shape: (n_valid_points, n_values)).\n    \"\"\"\n\n    def _interpolate_quad(\n        xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n        return self.element.interpolate(xi, el_nodal_values)\n\n    return eqx.filter_vmap(\n        _interpolate_quad,\n        in_axes=(0, 0, 0),\n    )(\n        valid_quad_points,\n        nodal_values[valid_elements],\n        self.mesh.coords[valid_elements],\n    )"
-            }
-          },
-          "source": "class Operator(Generic[ElementT], eqx.Module):\n    \"\"\"A class that provides an Operator for finite element method (FEM) assembly.\n\n    Args:\n        mesh: The mesh containing the elements and nodes.\n        element: The element type used for the finite element method.\n\n    Provides several operators for evaluating and integrating functions over the mesh,\n    such as `integrate`, `eval`, and `grad`. These operators can be used to compute\n    integrals, evaluate functions at quadrature points, and compute gradients of\n    functions at quadrature points.\n\n    Example:\n        >>> from tatva import Mesh, Tri3, Operator\n        >>> mesh = Mesh.unit_square(10, 10)  # Create a mesh\n        >>> element = Tri3()  # Define an element type\n        >>> operator = Operator(mesh, element)\n        >>> nodal_values = jnp.array(...)  # Nodal values at the mesh nodes\n        >>> energy = operator.integrate(energy_density)(nodal_values)\n    \"\"\"\n\n    mesh: Mesh\n    element: ElementT\n    det_J_elements_weights: Array\n\n    def __init__(self, mesh: Mesh, element: Element):\n        self.mesh = mesh\n        self.element = element\n\n        def _get_det_J(xi: jax.Array, el_nodal_coords: jax.Array) -> jax.Array:\n            \"\"\"Calls the function element.get_jacobian and returns the second output.\"\"\"\n            return self.element.get_jacobian(xi, el_nodal_coords)[1]\n\n        det_J_elements = self.map(_get_det_J)(self.mesh.coords)\n        self.det_J_elements_weights = jnp.einsum(\n            \"eq,q->eq\", det_J_elements, self.element.quad_weights\n        )\n\n    def __check_init__(self) -> None:\n        \"\"\"Validates the mesh and element compatibility. Does a series of checks to ensure\n        that the mesh and element are useable together.\n\n        Raises:\n            ValueError: If the mesh or element are not compatible.\n            TypeError: If the mesh element connectivity is not of integer type.\n        \"\"\"\n        coords = self.mesh.coords\n        elements = self.mesh.elements\n        quad_points = self.element.quad_points\n\n        if coords.ndim != 2:\n            raise ValueError(\n                \"Mesh coordinates must be a 2D array shaped (n_nodes, n_dim).\"\n            )\n        if coords.shape[0] == 0:\n            raise ValueError(\"Mesh must contain at least one node.\")\n\n        if elements.ndim != 2:\n            raise ValueError(\n                \"Mesh elements must be a 2D array shaped (n_elements, n_nodes_per_element).\"\n            )\n        if elements.shape[0] == 0:\n            raise ValueError(\"Mesh must contain at least one element.\")\n        if not jnp.issubdtype(elements.dtype, jnp.integer):\n            raise TypeError(\"Mesh element connectivity must contain integer indices.\")\n\n        if quad_points.ndim != 2 or quad_points.shape[0] == 0:\n            raise ValueError(\n                \"Element must define at least one quadrature point in an (n_q, n_dim) array.\"\n            )\n\n        local_dim = quad_points.shape[1]\n        global_dim = coords.shape[1]\n        if local_dim > 1 and local_dim != global_dim:\n            raise ValueError(\n                f\"Element {self.element.__class__.__name__} expects {local_dim}D coordinates but mesh provides {global_dim}D nodes.\"\n            )\n        if local_dim == 0:\n            raise ValueError(\"Element must have a positive number of local dimensions.\")\n\n        n_nodes_per_element = elements.shape[1]\n        shape_fn = np.asarray(self.element.shape_function(self.element.quad_points[0]))\n        if shape_fn.ndim != 1:\n            raise ValueError(\n                \"Element shape function must return a 1D array of nodal weights.\"\n            )\n        if shape_fn.shape[0] != n_nodes_per_element:\n            raise ValueError(\n                f\"Mesh connectivity lists {n_nodes_per_element} nodes per element but {self.element.__class__.__name__} expects {shape_fn.shape[0]}.\"\n            )\n\n        flat_elements = elements.ravel()\n        if flat_elements.min() < 0:\n            raise ValueError(\n                \"Mesh element connectivity contains negative node indices.\"\n            )\n        if flat_elements.max() >= coords.shape[0]:\n            raise ValueError(\n                \"Mesh element connectivity references nodes outside the mesh coordinates array.\"\n            )\n\n    def _vmap_over_elements_and_quads(\n        self, nodal_values: jax.Array, func: MappableOverElementsAndQuads\n    ) -> jax.Array:\n        \"\"\"Helper function. Maps a function over the elements and quadrature points of the\n        mesh.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n            func: The function to map over the elements and quadrature points.\n\n        Returns:\n            A jax.Array with the results of the function applied at each quadrature point\n            of each element (shape: (n_elements, n_quad_points, n_values)).\n        \"\"\"\n\n        def _at_each_element(\n            el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            return eqx.filter_vmap(\n                partial(\n                    func,\n                    el_nodal_values=el_nodal_values,\n                    el_nodal_coords=el_nodal_coords,\n                )\n            )(self.element.quad_points)\n\n        return eqx.filter_vmap(\n            _at_each_element,\n            in_axes=(0, 0),\n        )(nodal_values[self.mesh.elements], self.mesh.coords[self.mesh.elements])\n\n    def map(\n        self,\n        func: MappableOverElementsAndQuads[P, RT],\n        *,\n        element_quantity: Sequence[int] = (),\n    ) -> MappedCallable[P, RT]:\n        \"\"\"Maps a function over the elements and quad points of the mesh.\n\n        Returns a function that takes values at nodal points (globally) and returns the\n        vmapped result over the elements and quad points.\n\n        Args:\n            func: The function to map over the elements and quadrature points.\n            element_quantity: Indices of the arguments of `func` that are quantities\n                defined per element. The rest of the arguments are assumed to be defined\n                at nodal points.\n        \"\"\"\n\n        def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n            # values should be arrays!\n            _values = cast(tuple[jax.Array, ...], values)\n\n            def _at_each_element(*el_values) -> jax.Array:\n                return eqx.filter_vmap(\n                    lambda xi: func(xi, *el_values, **kwargs),\n                )(self.element.quad_points)\n\n            return eqx.filter_vmap(\n                _at_each_element,\n                in_axes=(0,) * len(values),\n            )(\n                *(\n                    v[self.mesh.elements] if i not in element_quantity else v\n                    for i, v in enumerate(_values)\n                )\n            )\n\n        return _mapped\n\n    def map_over_elements(\n        self,\n        func: MappableOverElements[P, RT],\n        *,\n        element_quantity: Sequence[int] = (),\n    ) -> MappedCallable[P, RT]:\n        \"\"\"Maps a function over the elements of the mesh.\n\n        Returns a function that takes values at nodal points (globally) and returns the\n        vmapped result over the elements.\n\n        Args:\n            func: The function to map over the elements.\n            element_quantity: Indices of the arguments of `func` that are quantities\n                defined per element. The rest of the arguments are assumed to be defined\n                at nodal points.\n        \"\"\"\n\n        def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n            # values should be arrays!\n            _values = cast(tuple[jax.Array, ...], values)\n\n            def _at_each_element(*el_values) -> RT:\n                return func(*el_values, **kwargs)\n\n            return eqx.filter_vmap(\n                _at_each_element,\n                in_axes=(0,) * len(values),\n            )(\n                *(\n                    v[self.mesh.elements] if i not in element_quantity else v\n                    for i, v in enumerate(_values)\n                )\n            )\n\n        return _mapped\n\n    def integrate(self, arg: jax.Array | Numeric) -> jax.Array:\n        \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh.\n\n        Args:\n            arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n                quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n                numeric value (float or int).\n\n        Returns:\n            The integral of the nodal values or quadrature values over the mesh.\n        \"\"\"\n        res = self.integrate_per_element(arg)\n        return jnp.sum(res, axis=(0,))  # Sum over elements and quadrature points\n\n    def integrate_per_element(self, arg: jax.Array | Numeric) -> jax.Array:\n        \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh. Returning the\n        integral per element.\n\n        Args:\n            arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n                quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n                numeric value (float or int).\n\n        Returns:\n            A `jax.Array` where each element contains the integral of the values in the\n            element (shape: (n_elements, n_values)).\n        \"\"\"\n        if isinstance(arg, Numeric):\n            res = self._integrate_quad_array(self.eval(jnp.array([arg])))\n        elif arg.shape[0] == self.mesh.elements.shape[0]:  # element field\n            res = self._integrate_quad_array(arg)\n        else:  # nodal field\n            field_at_quads = self.eval(arg)\n            res = self._integrate_quad_array(field_at_quads)\n\n        return res\n\n    def _integrate_quad_array(self, quad_values: jax.Array) -> jax.Array:\n        \"\"\"Integrates a given array of values at quadrature points over the mesh.\n\n        Args:\n            quad_values: The values at the quadrature points\n                (shape: (n_elements, n_quad_points, n_values))\n\n        Returns:\n            A `jax.Array` where each element contains the integral of the values in the\n            element (shape: (n_elements, n_values)).\n        \"\"\"\n\n        return jnp.einsum(\"eq...,eq->e...\", quad_values, self.det_J_elements_weights)\n\n    def eval(self, nodal_values: jax.Array) -> jax.Array:\n        \"\"\"Evaluates the nodal values at the quadrature points.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n        Returns:\n            A `jax.Array` with the values of the nodal values at each quadrature point of\n            each element (shape: (n_elements, n_quad_points, n_values)).\n        \"\"\"\n\n        def _eval_quad(\n            xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n            return self.element.interpolate(xi, el_nodal_values)\n\n        return self._vmap_over_elements_and_quads(nodal_values, _eval_quad)\n\n    def grad(self, nodal_values: jax.Array) -> jax.Array:\n        \"\"\"Computes the gradient of the nodal values at the quad points.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n        Returns:\n            A `jax.Array` with the gradient of the nodal values at each quadrature point\n            of each element (shape: (n_elements, n_quad_points, n_values, n_dim)).\n        \"\"\"\n\n        def _gradient_quad(\n            xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            \"\"\"Calls the function (gradient) on a quad point.\"\"\"\n            u_grad = self.element.gradient(xi, el_nodal_values, el_nodal_coords)\n            return u_grad\n\n        return self._vmap_over_elements_and_quads(nodal_values, _gradient_quad)\n\n    def interpolate(self, arg: jax.Array, points: jax.Array) -> jax.Array:\n        \"\"\"Interpolates nodal values to a set of points in the physical space.\n\n        Args:\n            arg: The nodal values to interpolate.\n            points: The points to interpolate the function or nodal values to.\n\n        Returns:\n            A `jax.Array` with the interpolated values at the given points.\n        \"\"\"\n\n        @jax.jit\n        def compute_rhs(point: jax.Array, nodal_coords: jax.Array) -> jax.Array:\n            xi0 = self.element.quad_points[0]\n            x0, _, _ = self.element.get_local_values(xi0, nodal_coords, nodal_coords)\n            return x0 - point\n\n        @jax.jit\n        def compute_lhs(nodal_coords: jax.Array) -> jax.Array:\n            dfdxi = jax.jacrev(self.element.get_local_values)\n            return dfdxi(self.element.quad_points[0], nodal_coords, nodal_coords)[0]\n\n        @autovmap(point=1, nodal_coords=2)\n        def _map_physical_to_reference(\n            point: jax.Array, nodal_coords: jax.Array\n        ) -> jax.Array:\n            rhs = compute_rhs(point, nodal_coords)\n            lhs = compute_lhs(nodal_coords)\n            delta_xi = jnp.linalg.solve(lhs, -rhs)\n            return self.element.quad_points[0] + delta_xi\n\n        def map_physical_to_reference(points: jax.Array) -> tuple[jax.Array, jax.Array]:\n            element_indices = find_containing_polygons(\n                points, self.mesh.coords[self.mesh.elements]\n            )\n            valid_indices = element_indices != -1\n            return (\n                _map_physical_to_reference(\n                    points[valid_indices],\n                    self.mesh.coords[\n                        self.mesh.elements[element_indices[valid_indices]]\n                    ],\n                ),\n                self.mesh.elements[element_indices[valid_indices]],\n            )\n\n        valid_quad_points, valid_elements = map_physical_to_reference(points)\n\n        if valid_quad_points.shape[0] != points.shape[0]:\n            raise RuntimeError(\"Some points are outside the mesh, revise the points\")\n\n        return self._interpolate_direct(arg, valid_quad_points, valid_elements)\n\n    def _interpolate_direct(\n        self,\n        nodal_values: jax.Array,\n        valid_quad_points: jax.Array,\n        valid_elements: jax.Array,\n    ) -> jax.Array:\n        \"\"\"Interpolates the given nodal values at the quad points.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n            valid_quad_points: The quadrature points in the reference element\n                (shape: (n_valid_points, n_dim))\n            valid_elements: The indices of the elements containing the quadrature points\n                (shape: (n_valid_points,))\n\n        Returns:\n            A `jax.Array` with the values of the nodal values at each quadrature point of\n            each element (shape: (n_valid_points, n_values)).\n        \"\"\"\n\n        def _interpolate_quad(\n            xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n            return self.element.interpolate(xi, el_nodal_values)\n\n        return eqx.filter_vmap(\n            _interpolate_quad,\n            in_axes=(0, 0, 0),\n        )(\n            valid_quad_points,\n            nodal_values[valid_elements],\n            self.mesh.coords[valid_elements],\n        )",
-          "inherited_members": {}
-        }
-      },
-      "functions": {}
-    },
-    "lifter": {
-      "name": "lifter",
-      "path": "tatva.lifter",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/lifter.py",
-      "description": null,
-      "docstring": [],
-      "attributes": [],
-      "modules": {},
-      "classes": {
-        "Constraint": {
-          "name": "Constraint",
-          "path": "tatva.lifter.Constraint",
-          "description": "Abstract base class for conditions applied during lifting.\n\nSubclasses define how constrained degrees of freedom (dofs) are enforced\nwhen mapping a reduced vector back to the full vector.",
-          "parameters": [],
-          "attributes": [
-            {
-              "name": "dofs",
-              "annotation": "jax.Array",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "The constrained dofs (an array of integer indices)."
-                }
-              ],
-              "value": null
-            }
-          ],
-          "docstring": [],
-          "functions": {
-            "__hash__": {
-              "name": "__hash__",
-              "path": "tatva.lifter.Constraint.__hash__",
-              "signature": "(self)",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def __hash__(self):\n    return hash((type(self), tuple(self.dofs.tolist())))"
-            },
-            "apply_lift": {
-              "name": "apply_lift",
-              "path": "tatva.lifter.Constraint.apply_lift",
-              "signature": "(self, u_full) -> Array",
-              "description": "Apply the constraint to a full vector and return the modified copy.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "u_full",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def apply_lift(self, u_full: Array) -> Array:  # override in subclasses\n    \"\"\"Apply the constraint to a full vector and return the modified copy.\"\"\"\n    return u_full"
-            }
-          },
-          "source": "class Constraint(ABC):\n    \"\"\"Abstract base class for conditions applied during lifting.\n\n    Subclasses define how constrained degrees of freedom (dofs) are enforced\n    when mapping a reduced vector back to the full vector.\n    \"\"\"\n\n    dofs: Array\n    \"\"\"The constrained dofs (an array of integer indices).\"\"\"\n\n    def __hash__(self):\n        return hash((type(self), tuple(self.dofs.tolist())))\n\n    def apply_lift(self, u_full: Array) -> Array:  # override in subclasses\n        \"\"\"Apply the constraint to a full vector and return the modified copy.\"\"\"\n        return u_full",
-          "inherited_members": {}
-        },
-        "PeriodicMap": {
-          "name": "PeriodicMap",
-          "path": "tatva.lifter.PeriodicMap",
-          "description": null,
-          "parameters": [
-            {
-              "name": "self",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "master_dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            }
-          ],
-          "attributes": [
-            {
-              "name": "dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "master_dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            }
-          ],
-          "docstring": [],
-          "functions": {
-            "apply_lift": {
-              "name": "apply_lift",
-              "path": "tatva.lifter.PeriodicMap.apply_lift",
-              "signature": "(self, u_full) -> Array",
-              "description": "Copy values from ``master_dofs`` into the constrained ``dofs``.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "u_full",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def apply_lift(self, u_full: Array) -> Array:\n    \"\"\"Copy values from ``master_dofs`` into the constrained ``dofs``.\"\"\"\n    return u_full.at[self.dofs].set(u_full[self.master_dofs])"
-            },
-            "__init__": {
-              "name": "__init__",
-              "path": "tatva.lifter.PeriodicMap.__init__",
-              "signature": "(self, dofs, master_dofs) -> None",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "dofs",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "master_dofs",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": ""
-            }
-          },
-          "source": "@dataclass\nclass PeriodicMap(Constraint):\n    dofs: Array\n    master_dofs: Array\n\n    def apply_lift(self, u_full: Array) -> Array:\n        \"\"\"Copy values from ``master_dofs`` into the constrained ``dofs``.\"\"\"\n        return u_full.at[self.dofs].set(u_full[self.master_dofs])",
-          "inherited_members": {
-            "tatva.lifter.Constraint": [
-              {
-                "kind": "function",
-                "path": "tatva.lifter.Constraint.__hash__"
-              }
-            ]
-          }
-        },
-        "DirichletBC": {
-          "name": "DirichletBC",
-          "path": "tatva.lifter.DirichletBC",
-          "description": null,
-          "parameters": [
-            {
-              "name": "self",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "values",
-              "annotation": "jax.Array | None",
-              "description": null,
-              "value": "None"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": "tatva.lifter.DirichletBC(dofs)"
-            },
-            {
-              "name": "values",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            }
-          ],
-          "docstring": [],
-          "functions": {
-            "__init__": {
-              "name": "__init__",
-              "path": "tatva.lifter.DirichletBC.__init__",
-              "signature": "(self, dofs, values=None)",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "dofs",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "values",
-                  "annotation": "jax.Array | None",
-                  "description": null,
-                  "value": "None"
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def __init__(self, dofs: Array, values: Array | None = None):\n    self.dofs = dofs\n    if values is None:\n        self.values = jnp.zeros(dofs.shape, dtype=jnp.float64)\n    else:\n        self.values = values"
-            },
-            "apply_lift": {
-              "name": "apply_lift",
-              "path": "tatva.lifter.DirichletBC.apply_lift",
-              "signature": "(self, u_full) -> Array",
-              "description": "Set constrained ``dofs`` to fixed ``values``.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "u_full",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def apply_lift(self, u_full: Array) -> Array:\n    \"\"\"Set constrained ``dofs`` to fixed ``values``.\"\"\"\n    return u_full.at[self.dofs].set(self.values)"
-            }
-          },
-          "source": "class DirichletBC(Constraint):\n    dofs: Array\n    values: Array\n\n    def __init__(self, dofs: Array, values: Array | None = None):\n        self.dofs = dofs\n        if values is None:\n            self.values = jnp.zeros(dofs.shape, dtype=jnp.float64)\n        else:\n            self.values = values\n\n    def apply_lift(self, u_full: Array) -> Array:\n        \"\"\"Set constrained ``dofs`` to fixed ``values``.\"\"\"\n        return u_full.at[self.dofs].set(self.values)",
-          "inherited_members": {
-            "tatva.lifter.Constraint": [
-              {
-                "kind": "function",
-                "path": "tatva.lifter.Constraint.__hash__"
-              }
-            ]
-          }
-        },
-        "Lifter": {
-          "name": "Lifter",
-          "path": "tatva.lifter.Lifter",
-          "description": "Create a lifter that maps between reduced and full vectors.",
-          "parameters": [
-            {
-              "name": "self",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "size",
-              "annotation": "int",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Total number of dofs in the full vector."
-                }
-              ]
-            },
-            {
-              "name": "constraints",
-              "annotation": "tatva.lifter.Constraint",
-              "description": null,
-              "value": "()"
-            },
-            {
-              "name": "kwargs",
-              "annotation": null,
-              "description": null,
-              "value": "{}"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "free_dofs",
-              "annotation": "jax.Array",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Array of free dofs as integer indices (not constrained)."
-                }
-              ],
-              "value": null
-            },
-            {
-              "name": "constrained_dofs",
-              "annotation": "jax.Array",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Array of constrained dofs as integer indices."
-                }
-              ],
-              "value": null
-            },
-            {
-              "name": "size",
-              "annotation": "int",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Total number of dofs in the full vector."
-                }
-              ],
-              "value": "tatva.lifter.Lifter(size)"
-            },
-            {
-              "name": "size_reduced",
-              "annotation": "int",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Number of dofs in the reduced vector (free dofs only)."
-                }
-              ],
-              "value": null
-            },
-            {
-              "name": "constraints",
-              "annotation": "tuple[tatva.lifter.Constraint, ...]",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Tuple of additional constraints (e.g., periodic maps)."
-                }
-              ],
-              "value": "tatva.lifter.Lifter(constraints)"
-            }
-          ],
-          "docstring": [
-            {
-              "kind": "text",
-              "value": "Examples::\n\n    lifter = Lifter(\n        6,\n        DirichletBC(jnp.array([0, 5])),\n        PeriodicMap(dofs=jnp.array([2]), master_dofs=jnp.array([1])),\n    )\n    u_reduced = jnp.array([10.0, 20.0, 30.0])\n    u_full = lifter.lift_from_null(u_reduced)\n    # u_full -> [0., 10., 10., 20., 30., 0.]\n    u_reduced_back = lifter.reduce(u_full)"
-            }
-          ],
-          "functions": {
-            "__init__": {
-              "name": "__init__",
-              "path": "tatva.lifter.Lifter.__init__",
-              "signature": "(self, size, *constraints, **kwargs)",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "size",
-                  "annotation": "int",
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "constraints",
-                  "annotation": "tatva.lifter.Constraint",
-                  "description": null,
-                  "value": "()"
-                },
-                {
-                  "name": "kwargs",
-                  "annotation": null,
-                  "description": null,
-                  "value": "{}"
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def __init__(\n    self,\n    size: int,\n    /,\n    *constraints: Constraint,\n    **kwargs,\n):\n    self.size = size\n    self.constraints = constraints\n\n    self._compute_sizes()"
-            },
-            "__hash__": {
-              "name": "__hash__",
-              "path": "tatva.lifter.Lifter.__hash__",
-              "signature": "(self)",
-              "description": null,
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def __hash__(self):\n    return hash((self.size, self.constraints))"
-            },
-            "_compute_sizes": {
-              "name": "_compute_sizes",
-              "path": "tatva.lifter.Lifter._compute_sizes",
-              "signature": "(self)",
-              "description": "Compute free/constrained dofs and reduced size.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def _compute_sizes(self):\n    \"\"\"Compute free/constrained dofs and reduced size.\"\"\"\n    all_dofs = jnp.arange(self.size)\n\n    if not self.constraints:\n        # base case: no constraints\n        self.free_dofs = all_dofs\n        self.constrained_dofs = jnp.array([], dtype=jnp.int32)\n        self.size_reduced = self.size\n        return\n\n    constrained = jnp.concatenate([cond.dofs for cond in self.constraints])\n    constrained = jnp.unique(constrained)\n    free = jnp.setdiff1d(all_dofs, constrained, assume_unique=True)\n\n    self.free_dofs = free\n    self.constrained_dofs = constrained\n    self.size_reduced = free.size"
-            },
-            "add": {
-              "name": "add",
-              "path": "tatva.lifter.Lifter.add",
-              "signature": "(self, condition) -> Self",
-              "description": "Return a new lifter with ``condition`` appended to constraints.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "condition",
-                  "annotation": "tatva.lifter.Constraint",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def add(self, condition: Constraint) -> Self:\n    \"\"\"Return a new lifter with ``condition`` appended to constraints.\"\"\"\n    return self.__class__(self.size, *self.constraints, condition)"
-            },
-            "lift": {
-              "name": "lift",
-              "path": "tatva.lifter.Lifter.lift",
-              "signature": "(self, u_reduced, u_full) -> Array",
-              "description": "Lift reduced displacement vector to full size.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "u_reduced",
-                  "annotation": "jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "Vector on free dofs (length ``size_reduced``)."
-                    }
-                  ]
-                },
-                {
-                  "name": "u_full",
-                  "annotation": "jax.Array",
-                  "description": [
-                    {
-                      "kind": "text",
-                      "value": "Base full vector to modify; typically previous solution."
-                    }
-                  ]
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": "jax.Array",
-                "description": "Full vector with free dofs set to ``u_reduced`` and constraints"
-              },
-              "docstring": [],
-              "source": "def lift(self, u_reduced: Array, u_full: Array) -> Array:\n    \"\"\"Lift reduced displacement vector to full size.\n\n    Args:\n        u_reduced: Vector on free dofs (length ``size_reduced``).\n        u_full: Base full vector to modify; typically previous solution.\n\n    Returns:\n        Full vector with free dofs set to ``u_reduced`` and constraints\n        applied (Dirichlet, periodic, etc.).\n    \"\"\"\n    u_full = u_full.at[self.free_dofs].set(u_reduced)\n    for condition in self.constraints:\n        u_full = condition.apply_lift(u_full)\n    return u_full"
-            },
-            "lift_from_zeros": {
-              "name": "lift_from_zeros",
-              "path": "tatva.lifter.Lifter.lift_from_zeros",
-              "signature": "(self, u_reduced) -> Array",
-              "description": "Lift reduced vector to a full vector starting from zeros.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "u_reduced",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def lift_from_zeros(self, u_reduced: Array) -> Array:\n    \"\"\"Lift reduced vector to a full vector starting from zeros.\"\"\"\n    u_full = jnp.zeros(self.size, dtype=u_reduced.dtype)\n    return self.lift(u_reduced, u_full)"
-            },
-            "reduce": {
-              "name": "reduce",
-              "path": "tatva.lifter.Lifter.reduce",
-              "signature": "(self, u_full) -> Array",
-              "description": "Extract the reduced vector by selecting free dofs from ``u_full``.",
-              "parameters": [
-                {
-                  "name": "self",
-                  "annotation": null,
-                  "description": null,
-                  "value": null
-                },
-                {
-                  "name": "u_full",
-                  "annotation": "jax.Array",
-                  "description": null,
-                  "value": null
-                }
-              ],
-              "returns": {
-                "name": "",
-                "annotation": null,
-                "description": null
-              },
-              "docstring": [],
-              "source": "def reduce(self, u_full: Array) -> Array:\n    \"\"\"Extract the reduced vector by selecting free dofs from ``u_full``.\"\"\"\n    return u_full[self.free_dofs]"
-            }
-          },
-          "source": "class Lifter(equinox.Module):\n    \"\"\"Create a lifter that maps between reduced and full vectors.\n\n    Args:\n        size: Total number of dofs in the full vector.\n        *constraints: Extra constraints (e.g., periodic maps).\n        **kwargs: Ignored; kept for compatibility with equinox.Module init.\n\n    Examples::\n\n        lifter = Lifter(\n            6,\n            DirichletBC(jnp.array([0, 5])),\n            PeriodicMap(dofs=jnp.array([2]), master_dofs=jnp.array([1])),\n        )\n        u_reduced = jnp.array([10.0, 20.0, 30.0])\n        u_full = lifter.lift_from_null(u_reduced)\n        # u_full -> [0., 10., 10., 20., 30., 0.]\n        u_reduced_back = lifter.reduce(u_full)\n\n    \"\"\"\n\n    free_dofs: Array\n    \"\"\"Array of free dofs as integer indices (not constrained).\"\"\"\n\n    constrained_dofs: Array\n    \"\"\"Array of constrained dofs as integer indices.\"\"\"\n\n    size: int\n    \"\"\"Total number of dofs in the full vector.\"\"\"\n\n    size_reduced: int\n    \"\"\"Number of dofs in the reduced vector (free dofs only).\"\"\"\n\n    constraints: tuple[Constraint, ...] = ()\n    \"\"\"Tuple of additional constraints (e.g., periodic maps).\"\"\"\n\n    def __init__(\n        self,\n        size: int,\n        /,\n        *constraints: Constraint,\n        **kwargs,\n    ):\n        self.size = size\n        self.constraints = constraints\n\n        self._compute_sizes()\n\n    def __hash__(self):\n        return hash((self.size, self.constraints))\n\n    def _compute_sizes(self):\n        \"\"\"Compute free/constrained dofs and reduced size.\"\"\"\n        all_dofs = jnp.arange(self.size)\n\n        if not self.constraints:\n            # base case: no constraints\n            self.free_dofs = all_dofs\n            self.constrained_dofs = jnp.array([], dtype=jnp.int32)\n            self.size_reduced = self.size\n            return\n\n        constrained = jnp.concatenate([cond.dofs for cond in self.constraints])\n        constrained = jnp.unique(constrained)\n        free = jnp.setdiff1d(all_dofs, constrained, assume_unique=True)\n\n        self.free_dofs = free\n        self.constrained_dofs = constrained\n        self.size_reduced = free.size\n\n    def add(self, condition: Constraint) -> Self:\n        \"\"\"Return a new lifter with ``condition`` appended to constraints.\"\"\"\n        return self.__class__(self.size, *self.constraints, condition)\n\n    def lift(self, u_reduced: Array, u_full: Array) -> Array:\n        \"\"\"Lift reduced displacement vector to full size.\n\n        Args:\n            u_reduced: Vector on free dofs (length ``size_reduced``).\n            u_full: Base full vector to modify; typically previous solution.\n\n        Returns:\n            Full vector with free dofs set to ``u_reduced`` and constraints\n            applied (Dirichlet, periodic, etc.).\n        \"\"\"\n        u_full = u_full.at[self.free_dofs].set(u_reduced)\n        for condition in self.constraints:\n            u_full = condition.apply_lift(u_full)\n        return u_full\n\n    def lift_from_zeros(self, u_reduced: Array) -> Array:\n        \"\"\"Lift reduced vector to a full vector starting from zeros.\"\"\"\n        u_full = jnp.zeros(self.size, dtype=u_reduced.dtype)\n        return self.lift(u_reduced, u_full)\n\n    def reduce(self, u_full: Array) -> Array:\n        \"\"\"Extract the reduced vector by selecting free dofs from ``u_full``.\"\"\"\n        return u_full[self.free_dofs]",
-          "inherited_members": {}
-        }
-      },
-      "functions": {}
-    },
-    "sparse": {
-      "name": "sparse",
-      "path": "tatva.sparse",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/sparse.py",
-      "description": null,
-      "docstring": [],
-      "attributes": [],
-      "modules": {},
-      "classes": {},
-      "functions": {
-        "jacfwd": {
-          "name": "jacfwd",
-          "path": "tatva.sparse.jacfwd",
-          "signature": "(func, sparsity_pattern)",
-          "description": null,
-          "parameters": [
-            {
-              "name": "func",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "sparsity_pattern",
-              "annotation": null,
-              "description": null,
-              "value": null
-            }
-          ],
-          "returns": {
-            "name": "",
-            "annotation": null,
-            "description": null
-          },
-          "docstring": [],
-          "source": "def jacfwd(func, sparsity_pattern):\n    return sparsejac.jacfwd(func, sparsity=sparsity_pattern)"
-        },
-        "jacrev": {
-          "name": "jacrev",
-          "path": "tatva.sparse.jacrev",
-          "signature": "(func, sparsity_pattern)",
-          "description": null,
-          "parameters": [
-            {
-              "name": "func",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "sparsity_pattern",
-              "annotation": null,
-              "description": null,
-              "value": null
-            }
-          ],
-          "returns": {
-            "name": "",
-            "annotation": null,
-            "description": null
-          },
-          "docstring": [],
-          "source": "def jacrev(func, sparsity_pattern):\n    return sparsejac.jacrev(func, sparsity=sparsity_pattern)"
-        },
-        "_create_sparse_structure": {
-          "name": "_create_sparse_structure",
-          "path": "tatva.sparse._create_sparse_structure",
-          "signature": "(elements, n_dofs_per_node, K_shape)",
-          "description": "Create a sparse structure for a given set of elements and constraints.\nArgs:\n    elements: (num_elements, nodes_per_element)\n    n_dofs_per_node: Number of degrees of freedom per node\n    K_shape: Shape of the matrix K\nReturns:\n    data: (num_nonzero_elements,)\n    indices: (num_nonzero_elements, 2)",
-          "parameters": [
-            {
-              "name": "elements",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "n_dofs_per_node",
-              "annotation": null,
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "K_shape",
-              "annotation": null,
-              "description": null,
-              "value": null
-            }
-          ],
-          "returns": {
-            "name": "",
-            "annotation": null,
-            "description": null
-          },
-          "docstring": [],
-          "source": "def _create_sparse_structure(elements, n_dofs_per_node, K_shape):\n    \"\"\"\n    Create a sparse structure for a given set of elements and constraints.\n    Args:\n        elements: (num_elements, nodes_per_element)\n        n_dofs_per_node: Number of degrees of freedom per node\n        K_shape: Shape of the matrix K\n    Returns:\n        data: (num_nonzero_elements,)\n        indices: (num_nonzero_elements, 2)\n    \"\"\"\n\n    elements = jnp.array(elements)\n    num_elements, nodes_per_element = elements.shape\n\n    # Compute all (i, j, k, l) combinations for each element\n    i_idx = jnp.repeat(\n        elements, nodes_per_element, axis=1\n    )  # (num_elements, nodes_per_element^2)\n    j_idx = jnp.tile(\n        elements, (1, nodes_per_element)\n    )  # (num_elements, nodes_per_element^2)\n\n    # Expand for n_dofs_per_node\n    k_idx = jnp.arange(n_dofs_per_node, dtype=jnp.int32)\n    l_idx = jnp.arange(n_dofs_per_node, dtype=jnp.int32)\n    k_idx, l_idx = jnp.meshgrid(k_idx, l_idx, indexing=\"ij\")\n    k_idx = k_idx.flatten()\n    l_idx = l_idx.flatten()\n\n    # For each element, get all (row, col) indices\n    def element_indices(i, j):\n        row = n_dofs_per_node * i + k_idx\n        col = n_dofs_per_node * j + l_idx\n        return row, col\n\n    # Vectorize over all (i, j) pairs for all elements\n    row_idx, col_idx = jax.vmap(element_indices)(i_idx.flatten(), j_idx.flatten())\n\n    # Flatten and clip to matrix size\n    row_idx = row_idx.flatten()\n    col_idx = col_idx.flatten()\n    mask = (row_idx < K_shape[0]) & (col_idx < K_shape[1])\n    row_idx = row_idx[mask]\n    col_idx = col_idx[mask]\n\n    # Create the sparse structure\n    indices = np.unique(np.vstack((row_idx, col_idx)).T, axis=0)\n\n    data = np.ones(indices.shape[0], dtype=jnp.int32)\n    sparsity_pattern = jax_sparse.BCOO((data, indices.astype(np.int32)), shape=K_shape)  # type: ignore\n    return sparsity_pattern"
-        },
-        "get_bc_indices": {
-          "name": "get_bc_indices",
-          "path": "tatva.sparse.get_bc_indices",
-          "signature": "(sparsity_pattern, fixed_dofs)",
-          "description": "Get the indices of the fixed degrees of freedom.\nArgs:\n    sparsity_pattern: jax.experimental.sparse.BCOO\n    fixed_dofs: (num_fixed_dofs,)\nReturns:\n    zero_indices: (num_zero_indices,)\n    one_indices: (num_one_indices,)",
-          "parameters": [
-            {
-              "name": "sparsity_pattern",
-              "annotation": "jax.experimental.sparse.jax.experimental.sparse.BCOO",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "fixed_dofs",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            }
-          ],
-          "returns": {
-            "name": "",
-            "annotation": null,
-            "description": null
-          },
-          "docstring": [],
-          "source": "def get_bc_indices(sparsity_pattern: jax_sparse.BCOO, fixed_dofs: Array):\n    \"\"\"\n    Get the indices of the fixed degrees of freedom.\n    Args:\n        sparsity_pattern: jax.experimental.sparse.BCOO\n        fixed_dofs: (num_fixed_dofs,)\n    Returns:\n        zero_indices: (num_zero_indices,)\n        one_indices: (num_one_indices,)\n    \"\"\"\n\n    indices = sparsity_pattern.indices\n    zero_indices = []\n    one_indices = []\n\n    for dof in fixed_dofs:\n        indexes = np.where(indices[:, 0] == dof)[0]\n        for idx in indexes:\n            zero_indices.append(int(idx))\n\n        idx = np.where(np.all(indices == np.array([dof, dof]), axis=1))[0][0]\n        one_indices.append(int(idx))\n\n    return np.array(zero_indices), np.array(one_indices)"
-        },
-        "create_sparsity_pattern": {
-          "name": "create_sparsity_pattern",
-          "path": "tatva.sparse.create_sparsity_pattern",
-          "signature": "(mesh, n_dofs_per_node, K_shape=None, constraint_elements=None)",
-          "description": "Create a sparsity pattern for a given set of elements and constraints.\nArgs:\n    mesh: Mesh object\n    n_dofs_per_node: Number of degrees of freedom per node\n    constraint_elements: Optional array of constraint elements. If provided, the sparsity pattern will be created for the constraint elements.\nReturns:\n    sparsity_pattern: jax.experimental.sparse.BCOO",
-          "parameters": [
-            {
-              "name": "mesh",
-              "annotation": "tatva.Mesh",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "n_dofs_per_node",
-              "annotation": "int",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "K_shape",
-              "annotation": "typing.Optional[typing.Tuple[int, int]]",
-              "description": null,
-              "value": "None"
-            },
-            {
-              "name": "constraint_elements",
-              "annotation": "typing.Optional[jax.Array]",
-              "description": null,
-              "value": "None"
-            }
-          ],
-          "returns": {
-            "name": "",
-            "annotation": null,
-            "description": null
-          },
-          "docstring": [],
-          "source": "def create_sparsity_pattern(\n    mesh: Mesh,\n    n_dofs_per_node: int,\n    K_shape: Optional[Tuple[int, int]] = None,\n    constraint_elements: Optional[Array] = None,\n):\n    \"\"\"\n    Create a sparsity pattern for a given set of elements and constraints.\n    Args:\n        mesh: Mesh object\n        n_dofs_per_node: Number of degrees of freedom per node\n        constraint_elements: Optional array of constraint elements. If provided, the sparsity pattern will be created for the constraint elements.\n    Returns:\n        sparsity_pattern: jax.experimental.sparse.BCOO\n    \"\"\"\n\n    elements = mesh.elements\n\n    if K_shape is None:\n        K_shape = (\n            n_dofs_per_node * mesh.coords.shape[0],\n            n_dofs_per_node * mesh.coords.shape[0],\n        )\n\n    sparsity_pattern = _create_sparse_structure(elements, n_dofs_per_node, K_shape)\n    if constraint_elements is not None:\n        sparsity_pattern_constraint = _create_sparse_structure(\n            constraint_elements, n_dofs_per_node, K_shape\n        )\n\n        combined_data = np.concatenate(\n            [sparsity_pattern.data, sparsity_pattern_constraint.data]\n        )\n        combined_indices = np.concatenate(\n            [sparsity_pattern.indices, sparsity_pattern_constraint.indices]\n        )\n        sparsity_pattern = jax_sparse.BCOO(\n            (combined_data, combined_indices),  # type: ignore\n            shape=K_shape,\n        )\n\n    return sparsity_pattern"
-        },
-        "create_sparsity_pattern_KKT": {
-          "name": "create_sparsity_pattern_KKT",
-          "path": "tatva.sparse.create_sparsity_pattern_KKT",
-          "signature": "(mesh, n_dofs_per_node, B)",
-          "description": "Create a sparsity pattern for the KKT system.\nArgs:\n    mesh: Mesh object\n    n_dofs_per_node: Number of degrees of freedom per node\n    B: Constraint matrix (nb_cons, n_dofs)\nReturns:\n    sparsity_pattern_KKT: jax.experimental.sparse.BCOO",
-          "parameters": [
-            {
-              "name": "mesh",
-              "annotation": "tatva.Mesh",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "n_dofs_per_node",
-              "annotation": "int",
-              "description": null,
-              "value": null
-            },
-            {
-              "name": "B",
-              "annotation": "jax.Array",
-              "description": null,
-              "value": null
-            }
-          ],
-          "returns": {
-            "name": "",
-            "annotation": null,
-            "description": null
-          },
-          "docstring": [],
-          "source": "def create_sparsity_pattern_KKT(mesh: Mesh, n_dofs_per_node: int, B: Array):\n    \"\"\"\n    Create a sparsity pattern for the KKT system.\n    Args:\n        mesh: Mesh object\n        n_dofs_per_node: Number of degrees of freedom per node\n        B: Constraint matrix (nb_cons, n_dofs)\n    Returns:\n        sparsity_pattern_KKT: jax.experimental.sparse.BCOO\n    \"\"\"\n\n    nb_cons = B.shape[0]\n\n    K_sparsity_pattern = create_sparsity_pattern(mesh, n_dofs_per_node=n_dofs_per_node)\n    B_sparsity_pattern = jax_sparse.BCOO.fromdense(B).astype(jnp.int32)\n\n    sparsity_pattern_left = jax_sparse.bcoo_concatenate(\n        [K_sparsity_pattern, B_sparsity_pattern], dimension=0\n    )\n\n    BT_sparsity_pattern = jax_sparse.BCOO.fromdense(B.T).astype(jnp.int32)\n    C = jax_sparse.BCOO.fromdense(jnp.eye(nb_cons, nb_cons, dtype=jnp.int32))\n    sparsity_pattern_right = jax_sparse.bcoo_concatenate(\n        [BT_sparsity_pattern, C], dimension=0\n    )\n\n    sparsity_pattern_KKT = jax_sparse.bcoo_concatenate(\n        [sparsity_pattern_left, sparsity_pattern_right], dimension=1\n    )\n\n    return sparsity_pattern_KKT"
-        },
-        "reduce_sparsity_pattern": {
-          "name": "reduce_sparsity_pattern",
-          "path": "tatva.sparse.reduce_sparsity_pattern",
-          "signature": "(pattern, free_dofs) -> BCOO",
-          "description": "Reduce a sparse matrix pattern to only the free dofs (for K_ff).",
-          "parameters": [
-            {
-              "name": "pattern",
-              "annotation": "jax.experimental.sparse.bcoo.BCOO",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Sparse matrix pattern in BCOO format on the full\nset of dofs."
-                }
-              ]
-            },
-            {
-              "name": "free_dofs",
-              "annotation": "jax.Array",
-              "description": [
-                {
-                  "kind": "text",
-                  "value": "Array of free dofs as integer indices."
-                }
-              ]
-            }
-          ],
-          "returns": {
-            "name": "BCOO",
-            "annotation": "jax.experimental.sparse.bcoo.BCOO",
-            "description": "Reduced sparse matrix pattern with rows and columns remapped\nto the reduced indexing of free dofs."
-          },
-          "docstring": [],
-          "source": "def reduce_sparsity_pattern(pattern: BCOO, free_dofs: Array) -> BCOO:\n    \"\"\"Reduce a sparse matrix pattern to only the free dofs (for K_ff).\n\n    Args:\n        pattern (BCOO): Sparse matrix pattern in BCOO format on the full\n            set of dofs.\n        free_dofs: Array of free dofs as integer indices.\n\n    Returns:\n        BCOO: Reduced sparse matrix pattern with rows and columns remapped\n            to the reduced indexing of free dofs.\n    \"\"\"\n    # Pull to host (avoid device OOM for big masks)\n    I = np.asarray(pattern.indices[:, 0])  # noqa: E741\n    J = np.asarray(pattern.indices[:, 1])\n    D = np.asarray(pattern.data)\n\n    n_full = int(pattern.shape[0])\n    free = np.asarray(free_dofs, dtype=np.int64)\n\n    # Membership mask: O(n_full) setup, O(nnz) index\n    is_free = np.zeros(n_full, dtype=bool)\n    is_free[free] = True\n    mask = is_free[I] & is_free[J]\n\n    I = I[mask]  # noqa: E741\n    J = J[mask]\n    D = D[mask]\n\n    # Full -> reduced reindex\n    index_map = -np.ones(n_full, dtype=np.int64)\n    index_map[free] = np.arange(free.size, dtype=np.int64)\n    I_red = index_map[I]\n    J_red = index_map[J]\n\n    # Deduplicate (sum data; for pure pattern set to 1)\n    keys = I_red * free.size + J_red\n    uniq, inv = np.unique(keys, return_inverse=True)\n    # accumulate\n    D_red = np.bincount(inv, weights=D, minlength=uniq.size)\n    I_red = (uniq // free.size).astype(np.int32)\n    J_red = (uniq % free.size).astype(np.int32)\n\n    # Back to JAX\n    indices_red = jnp.stack([jnp.asarray(I_red), jnp.asarray(J_red)], axis=1)\n    data_red = jnp.asarray(D_red)\n    shape = (free.size, free.size)\n\n    return BCOO((data_red, indices_red), shape=shape)"
-        }
-      }
-    },
     "compound": {
       "name": "compound",
       "path": "tatva.compound",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/compound.py",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/compound.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -3225,10 +1743,621 @@
       },
       "functions": {}
     },
+    "lifter": {
+      "name": "lifter",
+      "path": "tatva.lifter",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/lifter.py",
+      "description": null,
+      "docstring": [],
+      "attributes": [],
+      "modules": {},
+      "classes": {
+        "Constraint": {
+          "name": "Constraint",
+          "path": "tatva.lifter.Constraint",
+          "description": "Abstract base class for conditions applied during lifting.\n\nSubclasses define how constrained degrees of freedom (dofs) are enforced\nwhen mapping a reduced vector back to the full vector.",
+          "parameters": [],
+          "attributes": [
+            {
+              "name": "dofs",
+              "annotation": "jax.Array",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "The constrained dofs (an array of integer indices)."
+                }
+              ],
+              "value": null
+            }
+          ],
+          "docstring": [],
+          "functions": {
+            "__hash__": {
+              "name": "__hash__",
+              "path": "tatva.lifter.Constraint.__hash__",
+              "signature": "(self)",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def __hash__(self):\n    return hash((type(self), tuple(self.dofs.tolist())))"
+            },
+            "apply_lift": {
+              "name": "apply_lift",
+              "path": "tatva.lifter.Constraint.apply_lift",
+              "signature": "(self, u_full) -> Array",
+              "description": "Apply the constraint to a full vector and return the modified copy.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "u_full",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def apply_lift(self, u_full: Array) -> Array:  # override in subclasses\n    \"\"\"Apply the constraint to a full vector and return the modified copy.\"\"\"\n    return u_full"
+            }
+          },
+          "source": "class Constraint(ABC):\n    \"\"\"Abstract base class for conditions applied during lifting.\n\n    Subclasses define how constrained degrees of freedom (dofs) are enforced\n    when mapping a reduced vector back to the full vector.\n    \"\"\"\n\n    dofs: Array\n    \"\"\"The constrained dofs (an array of integer indices).\"\"\"\n\n    def __hash__(self):\n        return hash((type(self), tuple(self.dofs.tolist())))\n\n    def apply_lift(self, u_full: Array) -> Array:  # override in subclasses\n        \"\"\"Apply the constraint to a full vector and return the modified copy.\"\"\"\n        return u_full",
+          "inherited_members": {}
+        },
+        "PeriodicMap": {
+          "name": "PeriodicMap",
+          "path": "tatva.lifter.PeriodicMap",
+          "description": null,
+          "parameters": [
+            {
+              "name": "self",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "master_dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            }
+          ],
+          "attributes": [
+            {
+              "name": "dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "master_dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            }
+          ],
+          "docstring": [],
+          "functions": {
+            "apply_lift": {
+              "name": "apply_lift",
+              "path": "tatva.lifter.PeriodicMap.apply_lift",
+              "signature": "(self, u_full) -> Array",
+              "description": "Copy values from ``master_dofs`` into the constrained ``dofs``.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "u_full",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def apply_lift(self, u_full: Array) -> Array:\n    \"\"\"Copy values from ``master_dofs`` into the constrained ``dofs``.\"\"\"\n    return u_full.at[self.dofs].set(u_full[self.master_dofs])"
+            },
+            "__init__": {
+              "name": "__init__",
+              "path": "tatva.lifter.PeriodicMap.__init__",
+              "signature": "(self, dofs, master_dofs) -> None",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "dofs",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "master_dofs",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": ""
+            }
+          },
+          "source": "@dataclass\nclass PeriodicMap(Constraint):\n    dofs: Array\n    master_dofs: Array\n\n    def apply_lift(self, u_full: Array) -> Array:\n        \"\"\"Copy values from ``master_dofs`` into the constrained ``dofs``.\"\"\"\n        return u_full.at[self.dofs].set(u_full[self.master_dofs])",
+          "inherited_members": {
+            "tatva.lifter.Constraint": [
+              {
+                "kind": "function",
+                "path": "tatva.lifter.Constraint.__hash__"
+              }
+            ]
+          }
+        },
+        "DirichletBC": {
+          "name": "DirichletBC",
+          "path": "tatva.lifter.DirichletBC",
+          "description": null,
+          "parameters": [
+            {
+              "name": "self",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "values",
+              "annotation": "jax.Array | None",
+              "description": null,
+              "value": "None"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": "tatva.lifter.DirichletBC(dofs)"
+            },
+            {
+              "name": "values",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            }
+          ],
+          "docstring": [],
+          "functions": {
+            "__init__": {
+              "name": "__init__",
+              "path": "tatva.lifter.DirichletBC.__init__",
+              "signature": "(self, dofs, values=None)",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "dofs",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "values",
+                  "annotation": "jax.Array | None",
+                  "description": null,
+                  "value": "None"
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def __init__(self, dofs: Array, values: Array | None = None):\n    self.dofs = dofs\n    if values is None:\n        self.values = jnp.zeros(dofs.shape, dtype=jnp.float64)\n    else:\n        self.values = values"
+            },
+            "apply_lift": {
+              "name": "apply_lift",
+              "path": "tatva.lifter.DirichletBC.apply_lift",
+              "signature": "(self, u_full) -> Array",
+              "description": "Set constrained ``dofs`` to fixed ``values``.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "u_full",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def apply_lift(self, u_full: Array) -> Array:\n    \"\"\"Set constrained ``dofs`` to fixed ``values``.\"\"\"\n    return u_full.at[self.dofs].set(self.values)"
+            }
+          },
+          "source": "class DirichletBC(Constraint):\n    dofs: Array\n    values: Array\n\n    def __init__(self, dofs: Array, values: Array | None = None):\n        self.dofs = dofs\n        if values is None:\n            self.values = jnp.zeros(dofs.shape, dtype=jnp.float64)\n        else:\n            self.values = values\n\n    def apply_lift(self, u_full: Array) -> Array:\n        \"\"\"Set constrained ``dofs`` to fixed ``values``.\"\"\"\n        return u_full.at[self.dofs].set(self.values)",
+          "inherited_members": {
+            "tatva.lifter.Constraint": [
+              {
+                "kind": "function",
+                "path": "tatva.lifter.Constraint.__hash__"
+              }
+            ]
+          }
+        },
+        "Lifter": {
+          "name": "Lifter",
+          "path": "tatva.lifter.Lifter",
+          "description": "Create a lifter that maps between reduced and full vectors.",
+          "parameters": [
+            {
+              "name": "self",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "size",
+              "annotation": "int",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Total number of dofs in the full vector."
+                }
+              ]
+            },
+            {
+              "name": "constraints",
+              "annotation": "tatva.lifter.Constraint",
+              "description": null,
+              "value": "()"
+            },
+            {
+              "name": "kwargs",
+              "annotation": null,
+              "description": null,
+              "value": "{}"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "free_dofs",
+              "annotation": "jax.Array",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Array of free dofs as integer indices (not constrained)."
+                }
+              ],
+              "value": null
+            },
+            {
+              "name": "constrained_dofs",
+              "annotation": "jax.Array",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Array of constrained dofs as integer indices."
+                }
+              ],
+              "value": null
+            },
+            {
+              "name": "size",
+              "annotation": "int",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Total number of dofs in the full vector."
+                }
+              ],
+              "value": "tatva.lifter.Lifter(size)"
+            },
+            {
+              "name": "size_reduced",
+              "annotation": "int",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Number of dofs in the reduced vector (free dofs only)."
+                }
+              ],
+              "value": null
+            },
+            {
+              "name": "constraints",
+              "annotation": "tuple[tatva.lifter.Constraint, ...]",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Tuple of additional constraints (e.g., periodic maps)."
+                }
+              ],
+              "value": "tatva.lifter.Lifter(constraints)"
+            }
+          ],
+          "docstring": [
+            {
+              "kind": "text",
+              "value": "Examples::\n\n    lifter = Lifter(\n        6,\n        DirichletBC(jnp.array([0, 5])),\n        PeriodicMap(dofs=jnp.array([2]), master_dofs=jnp.array([1])),\n    )\n    u_reduced = jnp.array([10.0, 20.0, 30.0])\n    u_full = lifter.lift_from_null(u_reduced)\n    # u_full -> [0., 10., 10., 20., 30., 0.]\n    u_reduced_back = lifter.reduce(u_full)"
+            }
+          ],
+          "functions": {
+            "__init__": {
+              "name": "__init__",
+              "path": "tatva.lifter.Lifter.__init__",
+              "signature": "(self, size, *constraints, **kwargs)",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "size",
+                  "annotation": "int",
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "constraints",
+                  "annotation": "tatva.lifter.Constraint",
+                  "description": null,
+                  "value": "()"
+                },
+                {
+                  "name": "kwargs",
+                  "annotation": null,
+                  "description": null,
+                  "value": "{}"
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def __init__(\n    self,\n    size: int,\n    /,\n    *constraints: Constraint,\n    **kwargs,\n):\n    self.size = size\n    self.constraints = constraints\n\n    self._compute_sizes()"
+            },
+            "__hash__": {
+              "name": "__hash__",
+              "path": "tatva.lifter.Lifter.__hash__",
+              "signature": "(self)",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def __hash__(self):\n    return hash((self.size, self.constraints))"
+            },
+            "_compute_sizes": {
+              "name": "_compute_sizes",
+              "path": "tatva.lifter.Lifter._compute_sizes",
+              "signature": "(self)",
+              "description": "Compute free/constrained dofs and reduced size.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def _compute_sizes(self):\n    \"\"\"Compute free/constrained dofs and reduced size.\"\"\"\n    all_dofs = jnp.arange(self.size)\n\n    if not self.constraints:\n        # base case: no constraints\n        self.free_dofs = all_dofs\n        self.constrained_dofs = jnp.array([], dtype=jnp.int32)\n        self.size_reduced = self.size\n        return\n\n    constrained = jnp.concatenate([cond.dofs for cond in self.constraints])\n    constrained = jnp.unique(constrained)\n    free = jnp.setdiff1d(all_dofs, constrained, assume_unique=True)\n\n    self.free_dofs = free\n    self.constrained_dofs = constrained\n    self.size_reduced = free.size"
+            },
+            "add": {
+              "name": "add",
+              "path": "tatva.lifter.Lifter.add",
+              "signature": "(self, condition) -> Self",
+              "description": "Return a new lifter with ``condition`` appended to constraints.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "condition",
+                  "annotation": "tatva.lifter.Constraint",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def add(self, condition: Constraint) -> Self:\n    \"\"\"Return a new lifter with ``condition`` appended to constraints.\"\"\"\n    return self.__class__(self.size, *self.constraints, condition)"
+            },
+            "lift": {
+              "name": "lift",
+              "path": "tatva.lifter.Lifter.lift",
+              "signature": "(self, u_reduced, u_full) -> Array",
+              "description": "Lift reduced displacement vector to full size.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "u_reduced",
+                  "annotation": "jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "Vector on free dofs (length ``size_reduced``)."
+                    }
+                  ]
+                },
+                {
+                  "name": "u_full",
+                  "annotation": "jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "Base full vector to modify; typically previous solution."
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.Array",
+                "description": "Full vector with free dofs set to ``u_reduced`` and constraints"
+              },
+              "docstring": [],
+              "source": "def lift(self, u_reduced: Array, u_full: Array) -> Array:\n    \"\"\"Lift reduced displacement vector to full size.\n\n    Args:\n        u_reduced: Vector on free dofs (length ``size_reduced``).\n        u_full: Base full vector to modify; typically previous solution.\n\n    Returns:\n        Full vector with free dofs set to ``u_reduced`` and constraints\n        applied (Dirichlet, periodic, etc.).\n    \"\"\"\n    u_full = u_full.at[self.free_dofs].set(u_reduced)\n    for condition in self.constraints:\n        u_full = condition.apply_lift(u_full)\n    return u_full"
+            },
+            "lift_from_zeros": {
+              "name": "lift_from_zeros",
+              "path": "tatva.lifter.Lifter.lift_from_zeros",
+              "signature": "(self, u_reduced) -> Array",
+              "description": "Lift reduced vector to a full vector starting from zeros.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "u_reduced",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def lift_from_zeros(self, u_reduced: Array) -> Array:\n    \"\"\"Lift reduced vector to a full vector starting from zeros.\"\"\"\n    u_full = jnp.zeros(self.size, dtype=u_reduced.dtype)\n    return self.lift(u_reduced, u_full)"
+            },
+            "reduce": {
+              "name": "reduce",
+              "path": "tatva.lifter.Lifter.reduce",
+              "signature": "(self, u_full) -> Array",
+              "description": "Extract the reduced vector by selecting free dofs from ``u_full``.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "u_full",
+                  "annotation": "jax.Array",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def reduce(self, u_full: Array) -> Array:\n    \"\"\"Extract the reduced vector by selecting free dofs from ``u_full``.\"\"\"\n    return u_full[self.free_dofs]"
+            }
+          },
+          "source": "class Lifter(equinox.Module):\n    \"\"\"Create a lifter that maps between reduced and full vectors.\n\n    Args:\n        size: Total number of dofs in the full vector.\n        *constraints: Extra constraints (e.g., periodic maps).\n        **kwargs: Ignored; kept for compatibility with equinox.Module init.\n\n    Examples::\n\n        lifter = Lifter(\n            6,\n            DirichletBC(jnp.array([0, 5])),\n            PeriodicMap(dofs=jnp.array([2]), master_dofs=jnp.array([1])),\n        )\n        u_reduced = jnp.array([10.0, 20.0, 30.0])\n        u_full = lifter.lift_from_null(u_reduced)\n        # u_full -> [0., 10., 10., 20., 30., 0.]\n        u_reduced_back = lifter.reduce(u_full)\n\n    \"\"\"\n\n    free_dofs: Array\n    \"\"\"Array of free dofs as integer indices (not constrained).\"\"\"\n\n    constrained_dofs: Array\n    \"\"\"Array of constrained dofs as integer indices.\"\"\"\n\n    size: int\n    \"\"\"Total number of dofs in the full vector.\"\"\"\n\n    size_reduced: int\n    \"\"\"Number of dofs in the reduced vector (free dofs only).\"\"\"\n\n    constraints: tuple[Constraint, ...] = ()\n    \"\"\"Tuple of additional constraints (e.g., periodic maps).\"\"\"\n\n    def __init__(\n        self,\n        size: int,\n        /,\n        *constraints: Constraint,\n        **kwargs,\n    ):\n        self.size = size\n        self.constraints = constraints\n\n        self._compute_sizes()\n\n    def __hash__(self):\n        return hash((self.size, self.constraints))\n\n    def _compute_sizes(self):\n        \"\"\"Compute free/constrained dofs and reduced size.\"\"\"\n        all_dofs = jnp.arange(self.size)\n\n        if not self.constraints:\n            # base case: no constraints\n            self.free_dofs = all_dofs\n            self.constrained_dofs = jnp.array([], dtype=jnp.int32)\n            self.size_reduced = self.size\n            return\n\n        constrained = jnp.concatenate([cond.dofs for cond in self.constraints])\n        constrained = jnp.unique(constrained)\n        free = jnp.setdiff1d(all_dofs, constrained, assume_unique=True)\n\n        self.free_dofs = free\n        self.constrained_dofs = constrained\n        self.size_reduced = free.size\n\n    def add(self, condition: Constraint) -> Self:\n        \"\"\"Return a new lifter with ``condition`` appended to constraints.\"\"\"\n        return self.__class__(self.size, *self.constraints, condition)\n\n    def lift(self, u_reduced: Array, u_full: Array) -> Array:\n        \"\"\"Lift reduced displacement vector to full size.\n\n        Args:\n            u_reduced: Vector on free dofs (length ``size_reduced``).\n            u_full: Base full vector to modify; typically previous solution.\n\n        Returns:\n            Full vector with free dofs set to ``u_reduced`` and constraints\n            applied (Dirichlet, periodic, etc.).\n        \"\"\"\n        u_full = u_full.at[self.free_dofs].set(u_reduced)\n        for condition in self.constraints:\n            u_full = condition.apply_lift(u_full)\n        return u_full\n\n    def lift_from_zeros(self, u_reduced: Array) -> Array:\n        \"\"\"Lift reduced vector to a full vector starting from zeros.\"\"\"\n        u_full = jnp.zeros(self.size, dtype=u_reduced.dtype)\n        return self.lift(u_reduced, u_full)\n\n    def reduce(self, u_full: Array) -> Array:\n        \"\"\"Extract the reduced vector by selecting free dofs from ``u_full``.\"\"\"\n        return u_full[self.free_dofs]",
+          "inherited_members": {}
+        }
+      },
+      "functions": {}
+    },
     "mesh": {
       "name": "mesh",
       "path": "tatva.mesh",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/mesh.py",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/mesh.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -3531,10 +2660,881 @@
         }
       }
     },
+    "operator": {
+      "name": "operator",
+      "path": "tatva.operator",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/operator.py",
+      "description": null,
+      "docstring": [],
+      "attributes": [
+        {
+          "name": "P",
+          "annotation": null,
+          "description": null,
+          "value": "ParamSpec('P')"
+        },
+        {
+          "name": "RT",
+          "annotation": null,
+          "description": null,
+          "value": "TypeVar('RT', bound=(jax.Array | tuple), covariant=True)"
+        },
+        {
+          "name": "ElementT",
+          "annotation": null,
+          "description": null,
+          "value": "TypeVar('ElementT', bound=Element)"
+        },
+        {
+          "name": "Numeric",
+          "annotation": "typing.TypeAlias",
+          "description": null,
+          "value": "float | int | jax.numpy.jax.numpy.number"
+        },
+        {
+          "name": "MappableOverElements",
+          "annotation": "typing.TypeAlias",
+          "description": null,
+          "value": "typing.Callable[tatva.operator.P, tatva.operator.RT]"
+        }
+      ],
+      "modules": {},
+      "classes": {
+        "MappableOverElementsAndQuads": {
+          "name": "MappableOverElementsAndQuads",
+          "path": "tatva.operator.MappableOverElementsAndQuads",
+          "description": "Internal protocol for functions that are mapped over elements using\n`Operator.map`.",
+          "parameters": [],
+          "attributes": [],
+          "docstring": [],
+          "functions": {
+            "__call__": {
+              "name": "__call__",
+              "path": "tatva.operator.MappableOverElementsAndQuads.__call__",
+              "signature": "(xi, *el_values, **el_kwargs) -> RT",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "xi",
+                  "annotation": "jax.jax.Array",
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "el_values",
+                  "annotation": "tatva.operator.P.tatva.operator.P.args",
+                  "description": null,
+                  "value": "()"
+                },
+                {
+                  "name": "el_kwargs",
+                  "annotation": "tatva.operator.P.tatva.operator.P.kwargs",
+                  "description": null,
+                  "value": "{}"
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "@staticmethod\ndef __call__(\n    xi: jax.Array,\n    *el_values: P.args,\n    **el_kwargs: P.kwargs,\n) -> RT: ..."
+            }
+          },
+          "source": "class MappableOverElementsAndQuads(Protocol[P, RT]):\n    \"\"\"Internal protocol for functions that are mapped over elements using\n    `Operator.map`.\"\"\"\n\n    @staticmethod\n    def __call__(\n        xi: jax.Array,\n        *el_values: P.args,\n        **el_kwargs: P.kwargs,\n    ) -> RT: ...",
+          "inherited_members": {}
+        },
+        "MappedCallable": {
+          "name": "MappedCallable",
+          "path": "tatva.operator.MappedCallable",
+          "description": null,
+          "parameters": [],
+          "attributes": [],
+          "docstring": [],
+          "functions": {
+            "__call__": {
+              "name": "__call__",
+              "path": "tatva.operator.MappedCallable.__call__",
+              "signature": "(*args, **kwargs) -> RT",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "args",
+                  "annotation": "tatva.operator.P.tatva.operator.P.args",
+                  "description": null,
+                  "value": "()"
+                },
+                {
+                  "name": "kwargs",
+                  "annotation": "tatva.operator.P.tatva.operator.P.kwargs",
+                  "description": null,
+                  "value": "{}"
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "@staticmethod\ndef __call__(\n    *args: P.args,\n    **kwargs: P.kwargs,\n) -> RT: ..."
+            }
+          },
+          "source": "class MappedCallable(Protocol[P, RT]):\n    @staticmethod\n    def __call__(\n        *args: P.args,\n        **kwargs: P.kwargs,\n    ) -> RT: ...",
+          "inherited_members": {}
+        },
+        "Operator": {
+          "name": "Operator",
+          "path": "tatva.operator.Operator",
+          "description": "A class that provides an Operator for finite element method (FEM) assembly.",
+          "parameters": [
+            {
+              "name": "self",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "mesh",
+              "annotation": "tatva.mesh.Mesh",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "The mesh containing the elements and nodes."
+                }
+              ]
+            },
+            {
+              "name": "element",
+              "annotation": "tatva.element.Element",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "The element type used for the finite element method."
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "mesh",
+              "annotation": "tatva.mesh.Mesh",
+              "description": null,
+              "value": "tatva.operator.Operator(mesh)"
+            },
+            {
+              "name": "element",
+              "annotation": "tatva.operator.ElementT",
+              "description": null,
+              "value": "tatva.operator.Operator(element)"
+            },
+            {
+              "name": "det_J_elements_weights",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": "jnp.einsum('eq,q->eq', det_J_elements, self.element.quad_weights)"
+            }
+          ],
+          "docstring": [
+            {
+              "kind": "text",
+              "value": "Provides several operators for evaluating and integrating functions over the mesh,\nsuch as `integrate`, `eval`, and `grad`. These operators can be used to compute\nintegrals, evaluate functions at quadrature points, and compute gradients of\nfunctions at quadrature points."
+            },
+            {
+              "kind": "admonition",
+              "value": {
+                "annotation": "example",
+                "description": ">>> from tatva import Mesh, Tri3, Operator\n>>> mesh = Mesh.unit_square(10, 10)  # Create a mesh\n>>> element = Tri3()  # Define an element type\n>>> operator = Operator(mesh, element)\n>>> nodal_values = jnp.array(...)  # Nodal values at the mesh nodes\n>>> energy = operator.integrate(energy_density)(nodal_values)"
+              },
+              "title": "Example"
+            }
+          ],
+          "functions": {
+            "__init__": {
+              "name": "__init__",
+              "path": "tatva.operator.Operator.__init__",
+              "signature": "(self, mesh, element)",
+              "description": null,
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "mesh",
+                  "annotation": "tatva.mesh.Mesh",
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "element",
+                  "annotation": "tatva.element.Element",
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def __init__(self, mesh: Mesh, element: Element):\n    self.mesh = mesh\n    self.element = element\n\n    def _get_det_J(xi: jax.Array, el_nodal_coords: jax.Array) -> jax.Array:\n        \"\"\"Calls the function element.get_jacobian and returns the second output.\"\"\"\n        return self.element.get_jacobian(xi, el_nodal_coords)[1]\n\n    det_J_elements = self.map(_get_det_J)(self.mesh.coords)\n    self.det_J_elements_weights = jnp.einsum(\n        \"eq,q->eq\", det_J_elements, self.element.quad_weights\n    )"
+            },
+            "__check_init__": {
+              "name": "__check_init__",
+              "path": "tatva.operator.Operator.__check_init__",
+              "signature": "(self) -> None",
+              "description": "Validates the mesh and element compatibility. Does a series of checks to ensure\nthat the mesh and element are useable together.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [
+                {
+                  "kind": "raises",
+                  "value": [
+                    {
+                      "annotation": "ValueError",
+                      "description": "If the mesh or element are not compatible."
+                    },
+                    {
+                      "annotation": "TypeError",
+                      "description": "If the mesh element connectivity is not of integer type."
+                    }
+                  ]
+                }
+              ],
+              "source": "def __check_init__(self) -> None:\n    \"\"\"Validates the mesh and element compatibility. Does a series of checks to ensure\n    that the mesh and element are useable together.\n\n    Raises:\n        ValueError: If the mesh or element are not compatible.\n        TypeError: If the mesh element connectivity is not of integer type.\n    \"\"\"\n    coords = self.mesh.coords\n    elements = self.mesh.elements\n    quad_points = self.element.quad_points\n\n    if coords.ndim != 2:\n        raise ValueError(\n            \"Mesh coordinates must be a 2D array shaped (n_nodes, n_dim).\"\n        )\n    if coords.shape[0] == 0:\n        raise ValueError(\"Mesh must contain at least one node.\")\n\n    if elements.ndim != 2:\n        raise ValueError(\n            \"Mesh elements must be a 2D array shaped (n_elements, n_nodes_per_element).\"\n        )\n    if elements.shape[0] == 0:\n        raise ValueError(\"Mesh must contain at least one element.\")\n    if not jnp.issubdtype(elements.dtype, jnp.integer):\n        raise TypeError(\"Mesh element connectivity must contain integer indices.\")\n\n    if quad_points.ndim != 2 or quad_points.shape[0] == 0:\n        raise ValueError(\n            \"Element must define at least one quadrature point in an (n_q, n_dim) array.\"\n        )\n\n    local_dim = quad_points.shape[1]\n    global_dim = coords.shape[1]\n    if local_dim > 1 and local_dim != global_dim:\n        raise ValueError(\n            f\"Element {self.element.__class__.__name__} expects {local_dim}D coordinates but mesh provides {global_dim}D nodes.\"\n        )\n    if local_dim == 0:\n        raise ValueError(\"Element must have a positive number of local dimensions.\")\n\n    n_nodes_per_element = elements.shape[1]\n    shape_fn = np.asarray(self.element.shape_function(self.element.quad_points[0]))\n    if shape_fn.ndim != 1:\n        raise ValueError(\n            \"Element shape function must return a 1D array of nodal weights.\"\n        )\n    if shape_fn.shape[0] != n_nodes_per_element:\n        raise ValueError(\n            f\"Mesh connectivity lists {n_nodes_per_element} nodes per element but {self.element.__class__.__name__} expects {shape_fn.shape[0]}.\"\n        )\n\n    flat_elements = elements.ravel()\n    if flat_elements.min() < 0:\n        raise ValueError(\n            \"Mesh element connectivity contains negative node indices.\"\n        )\n    if flat_elements.max() >= coords.shape[0]:\n        raise ValueError(\n            \"Mesh element connectivity references nodes outside the mesh coordinates array.\"\n        )"
+            },
+            "_vmap_over_elements_and_quads": {
+              "name": "_vmap_over_elements_and_quads",
+              "path": "tatva.operator.Operator._vmap_over_elements_and_quads",
+              "signature": "(self, nodal_values, func) -> jax.Array",
+              "description": "Helper function. Maps a function over the elements and quadrature points of the\nmesh.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "nodal_values",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
+                    }
+                  ]
+                },
+                {
+                  "name": "func",
+                  "annotation": "tatva.operator.MappableOverElementsAndQuads",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The function to map over the elements and quadrature points."
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A jax.Array with the results of the function applied at each quadrature point"
+              },
+              "docstring": [],
+              "source": "def _vmap_over_elements_and_quads(\n    self, nodal_values: jax.Array, func: MappableOverElementsAndQuads\n) -> jax.Array:\n    \"\"\"Helper function. Maps a function over the elements and quadrature points of the\n    mesh.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n        func: The function to map over the elements and quadrature points.\n\n    Returns:\n        A jax.Array with the results of the function applied at each quadrature point\n        of each element (shape: (n_elements, n_quad_points, n_values)).\n    \"\"\"\n\n    def _at_each_element(\n        el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        return eqx.filter_vmap(\n            partial(\n                func,\n                el_nodal_values=el_nodal_values,\n                el_nodal_coords=el_nodal_coords,\n            )\n        )(self.element.quad_points)\n\n    return eqx.filter_vmap(\n        _at_each_element,\n        in_axes=(0, 0),\n    )(nodal_values[self.mesh.elements], self.mesh.coords[self.mesh.elements])"
+            },
+            "map": {
+              "name": "map",
+              "path": "tatva.operator.Operator.map",
+              "signature": "(self, func, *, element_quantity=()) -> MappedCallable[P, RT]",
+              "description": "Maps a function over the elements and quad points of the mesh.\n\nReturns a function that takes values at nodal points (globally) and returns the\nvmapped result over the elements and quad points.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "func",
+                  "annotation": "tatva.operator.MappableOverElementsAndQuads[tatva.operator.P, tatva.operator.RT]",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The function to map over the elements and quadrature points."
+                    }
+                  ]
+                },
+                {
+                  "name": "element_quantity",
+                  "annotation": "collections.abc.Sequence[int]",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "Indices of the arguments of `func` that are quantities\ndefined per element. The rest of the arguments are assumed to be defined\nat nodal points."
+                    }
+                  ],
+                  "value": "()"
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def map(\n    self,\n    func: MappableOverElementsAndQuads[P, RT],\n    *,\n    element_quantity: Sequence[int] = (),\n) -> MappedCallable[P, RT]:\n    \"\"\"Maps a function over the elements and quad points of the mesh.\n\n    Returns a function that takes values at nodal points (globally) and returns the\n    vmapped result over the elements and quad points.\n\n    Args:\n        func: The function to map over the elements and quadrature points.\n        element_quantity: Indices of the arguments of `func` that are quantities\n            defined per element. The rest of the arguments are assumed to be defined\n            at nodal points.\n    \"\"\"\n\n    def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n        # values should be arrays!\n        _values = cast(tuple[jax.Array, ...], values)\n\n        def _at_each_element(*el_values) -> jax.Array:\n            return eqx.filter_vmap(\n                lambda xi: func(xi, *el_values, **kwargs),\n            )(self.element.quad_points)\n\n        return eqx.filter_vmap(\n            _at_each_element,\n            in_axes=(0,) * len(values),\n        )(\n            *(\n                v[self.mesh.elements] if i not in element_quantity else v\n                for i, v in enumerate(_values)\n            )\n        )\n\n    return _mapped"
+            },
+            "map_over_elements": {
+              "name": "map_over_elements",
+              "path": "tatva.operator.Operator.map_over_elements",
+              "signature": "(self, func, *, element_quantity=()) -> MappedCallable[P, RT]",
+              "description": "Maps a function over the elements of the mesh.\n\nReturns a function that takes values at nodal points (globally) and returns the\nvmapped result over the elements.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "func",
+                  "annotation": "tatva.operator.MappableOverElements[tatva.operator.P, tatva.operator.RT]",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The function to map over the elements."
+                    }
+                  ]
+                },
+                {
+                  "name": "element_quantity",
+                  "annotation": "collections.abc.Sequence[int]",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "Indices of the arguments of `func` that are quantities\ndefined per element. The rest of the arguments are assumed to be defined\nat nodal points."
+                    }
+                  ],
+                  "value": "()"
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": null,
+                "description": null
+              },
+              "docstring": [],
+              "source": "def map_over_elements(\n    self,\n    func: MappableOverElements[P, RT],\n    *,\n    element_quantity: Sequence[int] = (),\n) -> MappedCallable[P, RT]:\n    \"\"\"Maps a function over the elements of the mesh.\n\n    Returns a function that takes values at nodal points (globally) and returns the\n    vmapped result over the elements.\n\n    Args:\n        func: The function to map over the elements.\n        element_quantity: Indices of the arguments of `func` that are quantities\n            defined per element. The rest of the arguments are assumed to be defined\n            at nodal points.\n    \"\"\"\n\n    def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n        # values should be arrays!\n        _values = cast(tuple[jax.Array, ...], values)\n\n        def _at_each_element(*el_values) -> RT:\n            return func(*el_values, **kwargs)\n\n        return eqx.filter_vmap(\n            _at_each_element,\n            in_axes=(0,) * len(values),\n        )(\n            *(\n                v[self.mesh.elements] if i not in element_quantity else v\n                for i, v in enumerate(_values)\n            )\n        )\n\n    return _mapped"
+            },
+            "integrate": {
+              "name": "integrate",
+              "path": "tatva.operator.Operator.integrate",
+              "signature": "(self, arg) -> jax.Array",
+              "description": "Integrate a nodal_array, quad_array, or numeric value over the mesh.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "arg",
+                  "annotation": "jax.jax.Array | tatva.operator.Numeric",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "An array of nodal values (shape: (n_nodes, n_values)), an array of\nquadrature values (shape: (n_elements, n_quad_points, n_values)), or a\nnumeric value (float or int)."
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "The integral of the nodal values or quadrature values over the mesh."
+              },
+              "docstring": [],
+              "source": "def integrate(self, arg: jax.Array | Numeric) -> jax.Array:\n    \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh.\n\n    Args:\n        arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n            quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n            numeric value (float or int).\n\n    Returns:\n        The integral of the nodal values or quadrature values over the mesh.\n    \"\"\"\n    res = self.integrate_per_element(arg)\n    return jnp.sum(res, axis=(0,))  # Sum over elements and quadrature points"
+            },
+            "integrate_per_element": {
+              "name": "integrate_per_element",
+              "path": "tatva.operator.Operator.integrate_per_element",
+              "signature": "(self, arg) -> jax.Array",
+              "description": "Integrate a nodal_array, quad_array, or numeric value over the mesh. Returning the\nintegral per element.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "arg",
+                  "annotation": "jax.jax.Array | tatva.operator.Numeric",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "An array of nodal values (shape: (n_nodes, n_values)), an array of\nquadrature values (shape: (n_elements, n_quad_points, n_values)), or a\nnumeric value (float or int)."
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A `jax.Array` where each element contains the integral of the values in the"
+              },
+              "docstring": [],
+              "source": "def integrate_per_element(self, arg: jax.Array | Numeric) -> jax.Array:\n    \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh. Returning the\n    integral per element.\n\n    Args:\n        arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n            quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n            numeric value (float or int).\n\n    Returns:\n        A `jax.Array` where each element contains the integral of the values in the\n        element (shape: (n_elements, n_values)).\n    \"\"\"\n    if isinstance(arg, Numeric):\n        res = self._integrate_quad_array(self.eval(jnp.array([arg])))\n    elif arg.shape[0] == self.mesh.elements.shape[0]:  # element field\n        res = self._integrate_quad_array(arg)\n    else:  # nodal field\n        field_at_quads = self.eval(arg)\n        res = self._integrate_quad_array(field_at_quads)\n\n    return res"
+            },
+            "_integrate_quad_array": {
+              "name": "_integrate_quad_array",
+              "path": "tatva.operator.Operator._integrate_quad_array",
+              "signature": "(self, quad_values) -> jax.Array",
+              "description": "Integrates a given array of values at quadrature points over the mesh.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "quad_values",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The values at the quadrature points\n(shape: (n_elements, n_quad_points, n_values))"
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A `jax.Array` where each element contains the integral of the values in the"
+              },
+              "docstring": [],
+              "source": "def _integrate_quad_array(self, quad_values: jax.Array) -> jax.Array:\n    \"\"\"Integrates a given array of values at quadrature points over the mesh.\n\n    Args:\n        quad_values: The values at the quadrature points\n            (shape: (n_elements, n_quad_points, n_values))\n\n    Returns:\n        A `jax.Array` where each element contains the integral of the values in the\n        element (shape: (n_elements, n_values)).\n    \"\"\"\n\n    return jnp.einsum(\"eq...,eq->e...\", quad_values, self.det_J_elements_weights)"
+            },
+            "eval": {
+              "name": "eval",
+              "path": "tatva.operator.Operator.eval",
+              "signature": "(self, nodal_values) -> jax.Array",
+              "description": "Evaluates the nodal values at the quadrature points.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "nodal_values",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A `jax.Array` with the values of the nodal values at each quadrature point of"
+              },
+              "docstring": [],
+              "source": "def eval(self, nodal_values: jax.Array) -> jax.Array:\n    \"\"\"Evaluates the nodal values at the quadrature points.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n    Returns:\n        A `jax.Array` with the values of the nodal values at each quadrature point of\n        each element (shape: (n_elements, n_quad_points, n_values)).\n    \"\"\"\n\n    def _eval_quad(\n        xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n        return self.element.interpolate(xi, el_nodal_values)\n\n    return self._vmap_over_elements_and_quads(nodal_values, _eval_quad)"
+            },
+            "grad": {
+              "name": "grad",
+              "path": "tatva.operator.Operator.grad",
+              "signature": "(self, nodal_values) -> jax.Array",
+              "description": "Computes the gradient of the nodal values at the quad points.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "nodal_values",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A `jax.Array` with the gradient of the nodal values at each quadrature point"
+              },
+              "docstring": [],
+              "source": "def grad(self, nodal_values: jax.Array) -> jax.Array:\n    \"\"\"Computes the gradient of the nodal values at the quad points.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n    Returns:\n        A `jax.Array` with the gradient of the nodal values at each quadrature point\n        of each element (shape: (n_elements, n_quad_points, n_values, n_dim)).\n    \"\"\"\n\n    def _gradient_quad(\n        xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        \"\"\"Calls the function (gradient) on a quad point.\"\"\"\n        u_grad = self.element.gradient(xi, el_nodal_values, el_nodal_coords)\n        return u_grad\n\n    return self._vmap_over_elements_and_quads(nodal_values, _gradient_quad)"
+            },
+            "interpolate": {
+              "name": "interpolate",
+              "path": "tatva.operator.Operator.interpolate",
+              "signature": "(self, arg, points) -> jax.Array",
+              "description": "Interpolates nodal values to a set of points in the physical space.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "arg",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The nodal values to interpolate."
+                    }
+                  ]
+                },
+                {
+                  "name": "points",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The points to interpolate the function or nodal values to."
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A `jax.Array` with the interpolated values at the given points."
+              },
+              "docstring": [],
+              "source": "def interpolate(self, arg: jax.Array, points: jax.Array) -> jax.Array:\n    \"\"\"Interpolates nodal values to a set of points in the physical space.\n\n    Args:\n        arg: The nodal values to interpolate.\n        points: The points to interpolate the function or nodal values to.\n\n    Returns:\n        A `jax.Array` with the interpolated values at the given points.\n    \"\"\"\n\n    @jax.jit\n    def compute_rhs(point: jax.Array, nodal_coords: jax.Array) -> jax.Array:\n        xi0 = self.element.quad_points[0]\n        x0, _, _ = self.element.get_local_values(xi0, nodal_coords, nodal_coords)\n        return x0 - point\n\n    @jax.jit\n    def compute_lhs(nodal_coords: jax.Array) -> jax.Array:\n        dfdxi = jax.jacrev(self.element.get_local_values)\n        return dfdxi(self.element.quad_points[0], nodal_coords, nodal_coords)[0]\n\n    @autovmap(point=1, nodal_coords=2)\n    def _map_physical_to_reference(\n        point: jax.Array, nodal_coords: jax.Array\n    ) -> jax.Array:\n        rhs = compute_rhs(point, nodal_coords)\n        lhs = compute_lhs(nodal_coords)\n        delta_xi = jnp.linalg.solve(lhs, -rhs)\n        return self.element.quad_points[0] + delta_xi\n\n    def map_physical_to_reference(points: jax.Array) -> tuple[jax.Array, jax.Array]:\n        element_indices = find_containing_polygons(\n            points, self.mesh.coords[self.mesh.elements]\n        )\n        valid_indices = element_indices != -1\n        return (\n            _map_physical_to_reference(\n                points[valid_indices],\n                self.mesh.coords[\n                    self.mesh.elements[element_indices[valid_indices]]\n                ],\n            ),\n            self.mesh.elements[element_indices[valid_indices]],\n        )\n\n    valid_quad_points, valid_elements = map_physical_to_reference(points)\n\n    if valid_quad_points.shape[0] != points.shape[0]:\n        raise RuntimeError(\"Some points are outside the mesh, revise the points\")\n\n    return self._interpolate_direct(arg, valid_quad_points, valid_elements)"
+            },
+            "_interpolate_direct": {
+              "name": "_interpolate_direct",
+              "path": "tatva.operator.Operator._interpolate_direct",
+              "signature": "(self, nodal_values, valid_quad_points, valid_elements) -> jax.Array",
+              "description": "Interpolates the given nodal values at the quad points.",
+              "parameters": [
+                {
+                  "name": "self",
+                  "annotation": null,
+                  "description": null,
+                  "value": null
+                },
+                {
+                  "name": "nodal_values",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The nodal values at the element's nodes (shape: (n_nodes, n_values))"
+                    }
+                  ]
+                },
+                {
+                  "name": "valid_quad_points",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The quadrature points in the reference element\n(shape: (n_valid_points, n_dim))"
+                    }
+                  ]
+                },
+                {
+                  "name": "valid_elements",
+                  "annotation": "jax.jax.Array",
+                  "description": [
+                    {
+                      "kind": "text",
+                      "value": "The indices of the elements containing the quadrature points\n(shape: (n_valid_points,))"
+                    }
+                  ]
+                }
+              ],
+              "returns": {
+                "name": "",
+                "annotation": "jax.jax.Array",
+                "description": "A `jax.Array` with the values of the nodal values at each quadrature point of"
+              },
+              "docstring": [],
+              "source": "def _interpolate_direct(\n    self,\n    nodal_values: jax.Array,\n    valid_quad_points: jax.Array,\n    valid_elements: jax.Array,\n) -> jax.Array:\n    \"\"\"Interpolates the given nodal values at the quad points.\n\n    Args:\n        nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n        valid_quad_points: The quadrature points in the reference element\n            (shape: (n_valid_points, n_dim))\n        valid_elements: The indices of the elements containing the quadrature points\n            (shape: (n_valid_points,))\n\n    Returns:\n        A `jax.Array` with the values of the nodal values at each quadrature point of\n        each element (shape: (n_valid_points, n_values)).\n    \"\"\"\n\n    def _interpolate_quad(\n        xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n    ) -> jax.Array:\n        \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n        return self.element.interpolate(xi, el_nodal_values)\n\n    return eqx.filter_vmap(\n        _interpolate_quad,\n        in_axes=(0, 0, 0),\n    )(\n        valid_quad_points,\n        nodal_values[valid_elements],\n        self.mesh.coords[valid_elements],\n    )"
+            }
+          },
+          "source": "class Operator(Generic[ElementT], eqx.Module):\n    \"\"\"A class that provides an Operator for finite element method (FEM) assembly.\n\n    Args:\n        mesh: The mesh containing the elements and nodes.\n        element: The element type used for the finite element method.\n\n    Provides several operators for evaluating and integrating functions over the mesh,\n    such as `integrate`, `eval`, and `grad`. These operators can be used to compute\n    integrals, evaluate functions at quadrature points, and compute gradients of\n    functions at quadrature points.\n\n    Example:\n        >>> from tatva import Mesh, Tri3, Operator\n        >>> mesh = Mesh.unit_square(10, 10)  # Create a mesh\n        >>> element = Tri3()  # Define an element type\n        >>> operator = Operator(mesh, element)\n        >>> nodal_values = jnp.array(...)  # Nodal values at the mesh nodes\n        >>> energy = operator.integrate(energy_density)(nodal_values)\n    \"\"\"\n\n    mesh: Mesh\n    element: ElementT\n    det_J_elements_weights: Array\n\n    def __init__(self, mesh: Mesh, element: Element):\n        self.mesh = mesh\n        self.element = element\n\n        def _get_det_J(xi: jax.Array, el_nodal_coords: jax.Array) -> jax.Array:\n            \"\"\"Calls the function element.get_jacobian and returns the second output.\"\"\"\n            return self.element.get_jacobian(xi, el_nodal_coords)[1]\n\n        det_J_elements = self.map(_get_det_J)(self.mesh.coords)\n        self.det_J_elements_weights = jnp.einsum(\n            \"eq,q->eq\", det_J_elements, self.element.quad_weights\n        )\n\n    def __check_init__(self) -> None:\n        \"\"\"Validates the mesh and element compatibility. Does a series of checks to ensure\n        that the mesh and element are useable together.\n\n        Raises:\n            ValueError: If the mesh or element are not compatible.\n            TypeError: If the mesh element connectivity is not of integer type.\n        \"\"\"\n        coords = self.mesh.coords\n        elements = self.mesh.elements\n        quad_points = self.element.quad_points\n\n        if coords.ndim != 2:\n            raise ValueError(\n                \"Mesh coordinates must be a 2D array shaped (n_nodes, n_dim).\"\n            )\n        if coords.shape[0] == 0:\n            raise ValueError(\"Mesh must contain at least one node.\")\n\n        if elements.ndim != 2:\n            raise ValueError(\n                \"Mesh elements must be a 2D array shaped (n_elements, n_nodes_per_element).\"\n            )\n        if elements.shape[0] == 0:\n            raise ValueError(\"Mesh must contain at least one element.\")\n        if not jnp.issubdtype(elements.dtype, jnp.integer):\n            raise TypeError(\"Mesh element connectivity must contain integer indices.\")\n\n        if quad_points.ndim != 2 or quad_points.shape[0] == 0:\n            raise ValueError(\n                \"Element must define at least one quadrature point in an (n_q, n_dim) array.\"\n            )\n\n        local_dim = quad_points.shape[1]\n        global_dim = coords.shape[1]\n        if local_dim > 1 and local_dim != global_dim:\n            raise ValueError(\n                f\"Element {self.element.__class__.__name__} expects {local_dim}D coordinates but mesh provides {global_dim}D nodes.\"\n            )\n        if local_dim == 0:\n            raise ValueError(\"Element must have a positive number of local dimensions.\")\n\n        n_nodes_per_element = elements.shape[1]\n        shape_fn = np.asarray(self.element.shape_function(self.element.quad_points[0]))\n        if shape_fn.ndim != 1:\n            raise ValueError(\n                \"Element shape function must return a 1D array of nodal weights.\"\n            )\n        if shape_fn.shape[0] != n_nodes_per_element:\n            raise ValueError(\n                f\"Mesh connectivity lists {n_nodes_per_element} nodes per element but {self.element.__class__.__name__} expects {shape_fn.shape[0]}.\"\n            )\n\n        flat_elements = elements.ravel()\n        if flat_elements.min() < 0:\n            raise ValueError(\n                \"Mesh element connectivity contains negative node indices.\"\n            )\n        if flat_elements.max() >= coords.shape[0]:\n            raise ValueError(\n                \"Mesh element connectivity references nodes outside the mesh coordinates array.\"\n            )\n\n    def _vmap_over_elements_and_quads(\n        self, nodal_values: jax.Array, func: MappableOverElementsAndQuads\n    ) -> jax.Array:\n        \"\"\"Helper function. Maps a function over the elements and quadrature points of the\n        mesh.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n            func: The function to map over the elements and quadrature points.\n\n        Returns:\n            A jax.Array with the results of the function applied at each quadrature point\n            of each element (shape: (n_elements, n_quad_points, n_values)).\n        \"\"\"\n\n        def _at_each_element(\n            el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            return eqx.filter_vmap(\n                partial(\n                    func,\n                    el_nodal_values=el_nodal_values,\n                    el_nodal_coords=el_nodal_coords,\n                )\n            )(self.element.quad_points)\n\n        return eqx.filter_vmap(\n            _at_each_element,\n            in_axes=(0, 0),\n        )(nodal_values[self.mesh.elements], self.mesh.coords[self.mesh.elements])\n\n    def map(\n        self,\n        func: MappableOverElementsAndQuads[P, RT],\n        *,\n        element_quantity: Sequence[int] = (),\n    ) -> MappedCallable[P, RT]:\n        \"\"\"Maps a function over the elements and quad points of the mesh.\n\n        Returns a function that takes values at nodal points (globally) and returns the\n        vmapped result over the elements and quad points.\n\n        Args:\n            func: The function to map over the elements and quadrature points.\n            element_quantity: Indices of the arguments of `func` that are quantities\n                defined per element. The rest of the arguments are assumed to be defined\n                at nodal points.\n        \"\"\"\n\n        def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n            # values should be arrays!\n            _values = cast(tuple[jax.Array, ...], values)\n\n            def _at_each_element(*el_values) -> jax.Array:\n                return eqx.filter_vmap(\n                    lambda xi: func(xi, *el_values, **kwargs),\n                )(self.element.quad_points)\n\n            return eqx.filter_vmap(\n                _at_each_element,\n                in_axes=(0,) * len(values),\n            )(\n                *(\n                    v[self.mesh.elements] if i not in element_quantity else v\n                    for i, v in enumerate(_values)\n                )\n            )\n\n        return _mapped\n\n    def map_over_elements(\n        self,\n        func: MappableOverElements[P, RT],\n        *,\n        element_quantity: Sequence[int] = (),\n    ) -> MappedCallable[P, RT]:\n        \"\"\"Maps a function over the elements of the mesh.\n\n        Returns a function that takes values at nodal points (globally) and returns the\n        vmapped result over the elements.\n\n        Args:\n            func: The function to map over the elements.\n            element_quantity: Indices of the arguments of `func` that are quantities\n                defined per element. The rest of the arguments are assumed to be defined\n                at nodal points.\n        \"\"\"\n\n        def _mapped(*values: P.args, **kwargs: P.kwargs) -> RT:\n            # values should be arrays!\n            _values = cast(tuple[jax.Array, ...], values)\n\n            def _at_each_element(*el_values) -> RT:\n                return func(*el_values, **kwargs)\n\n            return eqx.filter_vmap(\n                _at_each_element,\n                in_axes=(0,) * len(values),\n            )(\n                *(\n                    v[self.mesh.elements] if i not in element_quantity else v\n                    for i, v in enumerate(_values)\n                )\n            )\n\n        return _mapped\n\n    def integrate(self, arg: jax.Array | Numeric) -> jax.Array:\n        \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh.\n\n        Args:\n            arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n                quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n                numeric value (float or int).\n\n        Returns:\n            The integral of the nodal values or quadrature values over the mesh.\n        \"\"\"\n        res = self.integrate_per_element(arg)\n        return jnp.sum(res, axis=(0,))  # Sum over elements and quadrature points\n\n    def integrate_per_element(self, arg: jax.Array | Numeric) -> jax.Array:\n        \"\"\"Integrate a nodal_array, quad_array, or numeric value over the mesh. Returning the\n        integral per element.\n\n        Args:\n            arg: An array of nodal values (shape: (n_nodes, n_values)), an array of\n                quadrature values (shape: (n_elements, n_quad_points, n_values)), or a\n                numeric value (float or int).\n\n        Returns:\n            A `jax.Array` where each element contains the integral of the values in the\n            element (shape: (n_elements, n_values)).\n        \"\"\"\n        if isinstance(arg, Numeric):\n            res = self._integrate_quad_array(self.eval(jnp.array([arg])))\n        elif arg.shape[0] == self.mesh.elements.shape[0]:  # element field\n            res = self._integrate_quad_array(arg)\n        else:  # nodal field\n            field_at_quads = self.eval(arg)\n            res = self._integrate_quad_array(field_at_quads)\n\n        return res\n\n    def _integrate_quad_array(self, quad_values: jax.Array) -> jax.Array:\n        \"\"\"Integrates a given array of values at quadrature points over the mesh.\n\n        Args:\n            quad_values: The values at the quadrature points\n                (shape: (n_elements, n_quad_points, n_values))\n\n        Returns:\n            A `jax.Array` where each element contains the integral of the values in the\n            element (shape: (n_elements, n_values)).\n        \"\"\"\n\n        return jnp.einsum(\"eq...,eq->e...\", quad_values, self.det_J_elements_weights)\n\n    def eval(self, nodal_values: jax.Array) -> jax.Array:\n        \"\"\"Evaluates the nodal values at the quadrature points.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n        Returns:\n            A `jax.Array` with the values of the nodal values at each quadrature point of\n            each element (shape: (n_elements, n_quad_points, n_values)).\n        \"\"\"\n\n        def _eval_quad(\n            xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n            return self.element.interpolate(xi, el_nodal_values)\n\n        return self._vmap_over_elements_and_quads(nodal_values, _eval_quad)\n\n    def grad(self, nodal_values: jax.Array) -> jax.Array:\n        \"\"\"Computes the gradient of the nodal values at the quad points.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n\n        Returns:\n            A `jax.Array` with the gradient of the nodal values at each quadrature point\n            of each element (shape: (n_elements, n_quad_points, n_values, n_dim)).\n        \"\"\"\n\n        def _gradient_quad(\n            xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            \"\"\"Calls the function (gradient) on a quad point.\"\"\"\n            u_grad = self.element.gradient(xi, el_nodal_values, el_nodal_coords)\n            return u_grad\n\n        return self._vmap_over_elements_and_quads(nodal_values, _gradient_quad)\n\n    def interpolate(self, arg: jax.Array, points: jax.Array) -> jax.Array:\n        \"\"\"Interpolates nodal values to a set of points in the physical space.\n\n        Args:\n            arg: The nodal values to interpolate.\n            points: The points to interpolate the function or nodal values to.\n\n        Returns:\n            A `jax.Array` with the interpolated values at the given points.\n        \"\"\"\n\n        @jax.jit\n        def compute_rhs(point: jax.Array, nodal_coords: jax.Array) -> jax.Array:\n            xi0 = self.element.quad_points[0]\n            x0, _, _ = self.element.get_local_values(xi0, nodal_coords, nodal_coords)\n            return x0 - point\n\n        @jax.jit\n        def compute_lhs(nodal_coords: jax.Array) -> jax.Array:\n            dfdxi = jax.jacrev(self.element.get_local_values)\n            return dfdxi(self.element.quad_points[0], nodal_coords, nodal_coords)[0]\n\n        @autovmap(point=1, nodal_coords=2)\n        def _map_physical_to_reference(\n            point: jax.Array, nodal_coords: jax.Array\n        ) -> jax.Array:\n            rhs = compute_rhs(point, nodal_coords)\n            lhs = compute_lhs(nodal_coords)\n            delta_xi = jnp.linalg.solve(lhs, -rhs)\n            return self.element.quad_points[0] + delta_xi\n\n        def map_physical_to_reference(points: jax.Array) -> tuple[jax.Array, jax.Array]:\n            element_indices = find_containing_polygons(\n                points, self.mesh.coords[self.mesh.elements]\n            )\n            valid_indices = element_indices != -1\n            return (\n                _map_physical_to_reference(\n                    points[valid_indices],\n                    self.mesh.coords[\n                        self.mesh.elements[element_indices[valid_indices]]\n                    ],\n                ),\n                self.mesh.elements[element_indices[valid_indices]],\n            )\n\n        valid_quad_points, valid_elements = map_physical_to_reference(points)\n\n        if valid_quad_points.shape[0] != points.shape[0]:\n            raise RuntimeError(\"Some points are outside the mesh, revise the points\")\n\n        return self._interpolate_direct(arg, valid_quad_points, valid_elements)\n\n    def _interpolate_direct(\n        self,\n        nodal_values: jax.Array,\n        valid_quad_points: jax.Array,\n        valid_elements: jax.Array,\n    ) -> jax.Array:\n        \"\"\"Interpolates the given nodal values at the quad points.\n\n        Args:\n            nodal_values: The nodal values at the element's nodes (shape: (n_nodes, n_values))\n            valid_quad_points: The quadrature points in the reference element\n                (shape: (n_valid_points, n_dim))\n            valid_elements: The indices of the elements containing the quadrature points\n                (shape: (n_valid_points,))\n\n        Returns:\n            A `jax.Array` with the values of the nodal values at each quadrature point of\n            each element (shape: (n_valid_points, n_values)).\n        \"\"\"\n\n        def _interpolate_quad(\n            xi: jax.Array, el_nodal_values: jax.Array, el_nodal_coords: jax.Array\n        ) -> jax.Array:\n            \"\"\"Calls the function (interpolator) on a quad point.\"\"\"\n            return self.element.interpolate(xi, el_nodal_values)\n\n        return eqx.filter_vmap(\n            _interpolate_quad,\n            in_axes=(0, 0, 0),\n        )(\n            valid_quad_points,\n            nodal_values[valid_elements],\n            self.mesh.coords[valid_elements],\n        )",
+          "inherited_members": {}
+        }
+      },
+      "functions": {}
+    },
+    "sparse": {
+      "name": "sparse",
+      "path": "tatva.sparse",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/sparse.py",
+      "description": null,
+      "docstring": [],
+      "attributes": [],
+      "modules": {},
+      "classes": {},
+      "functions": {
+        "jacfwd": {
+          "name": "jacfwd",
+          "path": "tatva.sparse.jacfwd",
+          "signature": "(func, sparsity_pattern)",
+          "description": null,
+          "parameters": [
+            {
+              "name": "func",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "sparsity_pattern",
+              "annotation": null,
+              "description": null,
+              "value": null
+            }
+          ],
+          "returns": {
+            "name": "",
+            "annotation": null,
+            "description": null
+          },
+          "docstring": [],
+          "source": "def jacfwd(func, sparsity_pattern):\n    return sparsejac.jacfwd(func, sparsity=sparsity_pattern)"
+        },
+        "jacrev": {
+          "name": "jacrev",
+          "path": "tatva.sparse.jacrev",
+          "signature": "(func, sparsity_pattern)",
+          "description": null,
+          "parameters": [
+            {
+              "name": "func",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "sparsity_pattern",
+              "annotation": null,
+              "description": null,
+              "value": null
+            }
+          ],
+          "returns": {
+            "name": "",
+            "annotation": null,
+            "description": null
+          },
+          "docstring": [],
+          "source": "def jacrev(func, sparsity_pattern):\n    return sparsejac.jacrev(func, sparsity=sparsity_pattern)"
+        },
+        "_create_sparse_structure": {
+          "name": "_create_sparse_structure",
+          "path": "tatva.sparse._create_sparse_structure",
+          "signature": "(elements, n_dofs_per_node, K_shape)",
+          "description": "Create a sparse structure for a given set of elements and constraints.\nArgs:\n    elements: (num_elements, nodes_per_element)\n    n_dofs_per_node: Number of degrees of freedom per node\n    K_shape: Shape of the matrix K\nReturns:\n    data: (num_nonzero_elements,)\n    indices: (num_nonzero_elements, 2)",
+          "parameters": [
+            {
+              "name": "elements",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "n_dofs_per_node",
+              "annotation": null,
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "K_shape",
+              "annotation": null,
+              "description": null,
+              "value": null
+            }
+          ],
+          "returns": {
+            "name": "",
+            "annotation": null,
+            "description": null
+          },
+          "docstring": [],
+          "source": "def _create_sparse_structure(elements, n_dofs_per_node, K_shape):\n    \"\"\"\n    Create a sparse structure for a given set of elements and constraints.\n    Args:\n        elements: (num_elements, nodes_per_element)\n        n_dofs_per_node: Number of degrees of freedom per node\n        K_shape: Shape of the matrix K\n    Returns:\n        data: (num_nonzero_elements,)\n        indices: (num_nonzero_elements, 2)\n    \"\"\"\n\n    elements = jnp.array(elements)\n    num_elements, nodes_per_element = elements.shape\n\n    # Compute all (i, j, k, l) combinations for each element\n    i_idx = jnp.repeat(\n        elements, nodes_per_element, axis=1\n    )  # (num_elements, nodes_per_element^2)\n    j_idx = jnp.tile(\n        elements, (1, nodes_per_element)\n    )  # (num_elements, nodes_per_element^2)\n\n    # Expand for n_dofs_per_node\n    k_idx = jnp.arange(n_dofs_per_node, dtype=jnp.int32)\n    l_idx = jnp.arange(n_dofs_per_node, dtype=jnp.int32)\n    k_idx, l_idx = jnp.meshgrid(k_idx, l_idx, indexing=\"ij\")\n    k_idx = k_idx.flatten()\n    l_idx = l_idx.flatten()\n\n    # For each element, get all (row, col) indices\n    def element_indices(i, j):\n        row = n_dofs_per_node * i + k_idx\n        col = n_dofs_per_node * j + l_idx\n        return row, col\n\n    # Vectorize over all (i, j) pairs for all elements\n    row_idx, col_idx = jax.vmap(element_indices)(i_idx.flatten(), j_idx.flatten())\n\n    # Flatten and clip to matrix size\n    row_idx = row_idx.flatten()\n    col_idx = col_idx.flatten()\n    mask = (row_idx < K_shape[0]) & (col_idx < K_shape[1])\n    row_idx = row_idx[mask]\n    col_idx = col_idx[mask]\n\n    # Create the sparse structure\n    indices = np.unique(np.vstack((row_idx, col_idx)).T, axis=0)\n\n    data = np.ones(indices.shape[0], dtype=jnp.int32)\n    sparsity_pattern = jax_sparse.BCOO((data, indices.astype(np.int32)), shape=K_shape)  # type: ignore\n    return sparsity_pattern"
+        },
+        "get_bc_indices": {
+          "name": "get_bc_indices",
+          "path": "tatva.sparse.get_bc_indices",
+          "signature": "(sparsity_pattern, fixed_dofs)",
+          "description": "Get the indices of the fixed degrees of freedom.\nArgs:\n    sparsity_pattern: jax.experimental.sparse.BCOO\n    fixed_dofs: (num_fixed_dofs,)\nReturns:\n    zero_indices: (num_zero_indices,)\n    one_indices: (num_one_indices,)",
+          "parameters": [
+            {
+              "name": "sparsity_pattern",
+              "annotation": "jax.experimental.sparse.jax.experimental.sparse.BCOO",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "fixed_dofs",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            }
+          ],
+          "returns": {
+            "name": "",
+            "annotation": null,
+            "description": null
+          },
+          "docstring": [],
+          "source": "def get_bc_indices(sparsity_pattern: jax_sparse.BCOO, fixed_dofs: Array):\n    \"\"\"\n    Get the indices of the fixed degrees of freedom.\n    Args:\n        sparsity_pattern: jax.experimental.sparse.BCOO\n        fixed_dofs: (num_fixed_dofs,)\n    Returns:\n        zero_indices: (num_zero_indices,)\n        one_indices: (num_one_indices,)\n    \"\"\"\n\n    indices = sparsity_pattern.indices\n    zero_indices = []\n    one_indices = []\n\n    for dof in fixed_dofs:\n        indexes = np.where(indices[:, 0] == dof)[0]\n        for idx in indexes:\n            zero_indices.append(int(idx))\n\n        idx = np.where(np.all(indices == np.array([dof, dof]), axis=1))[0][0]\n        one_indices.append(int(idx))\n\n    return np.array(zero_indices), np.array(one_indices)"
+        },
+        "create_sparsity_pattern": {
+          "name": "create_sparsity_pattern",
+          "path": "tatva.sparse.create_sparsity_pattern",
+          "signature": "(mesh, n_dofs_per_node, K_shape=None, constraint_elements=None)",
+          "description": "Create a sparsity pattern for a given set of elements and constraints.\nArgs:\n    mesh: Mesh object\n    n_dofs_per_node: Number of degrees of freedom per node\n    constraint_elements: Optional array of constraint elements. If provided, the sparsity pattern will be created for the constraint elements.\nReturns:\n    sparsity_pattern: jax.experimental.sparse.BCOO",
+          "parameters": [
+            {
+              "name": "mesh",
+              "annotation": "tatva.Mesh",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "n_dofs_per_node",
+              "annotation": "int",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "K_shape",
+              "annotation": "typing.Optional[typing.Tuple[int, int]]",
+              "description": null,
+              "value": "None"
+            },
+            {
+              "name": "constraint_elements",
+              "annotation": "typing.Optional[jax.Array]",
+              "description": null,
+              "value": "None"
+            }
+          ],
+          "returns": {
+            "name": "",
+            "annotation": null,
+            "description": null
+          },
+          "docstring": [],
+          "source": "def create_sparsity_pattern(\n    mesh: Mesh,\n    n_dofs_per_node: int,\n    K_shape: Optional[Tuple[int, int]] = None,\n    constraint_elements: Optional[Array] = None,\n):\n    \"\"\"\n    Create a sparsity pattern for a given set of elements and constraints.\n    Args:\n        mesh: Mesh object\n        n_dofs_per_node: Number of degrees of freedom per node\n        constraint_elements: Optional array of constraint elements. If provided, the sparsity pattern will be created for the constraint elements.\n    Returns:\n        sparsity_pattern: jax.experimental.sparse.BCOO\n    \"\"\"\n\n    elements = mesh.elements\n\n    if K_shape is None:\n        K_shape = (\n            n_dofs_per_node * mesh.coords.shape[0],\n            n_dofs_per_node * mesh.coords.shape[0],\n        )\n\n    sparsity_pattern = _create_sparse_structure(elements, n_dofs_per_node, K_shape)\n    if constraint_elements is not None:\n        sparsity_pattern_constraint = _create_sparse_structure(\n            constraint_elements, n_dofs_per_node, K_shape\n        )\n\n        combined_data = np.concatenate(\n            [sparsity_pattern.data, sparsity_pattern_constraint.data]\n        )\n        combined_indices = np.concatenate(\n            [sparsity_pattern.indices, sparsity_pattern_constraint.indices]\n        )\n        sparsity_pattern = jax_sparse.BCOO(\n            (combined_data, combined_indices),  # type: ignore\n            shape=K_shape,\n        )\n\n    return sparsity_pattern"
+        },
+        "create_sparsity_pattern_KKT": {
+          "name": "create_sparsity_pattern_KKT",
+          "path": "tatva.sparse.create_sparsity_pattern_KKT",
+          "signature": "(mesh, n_dofs_per_node, B)",
+          "description": "Create a sparsity pattern for the KKT system.\nArgs:\n    mesh: Mesh object\n    n_dofs_per_node: Number of degrees of freedom per node\n    B: Constraint matrix (nb_cons, n_dofs)\nReturns:\n    sparsity_pattern_KKT: jax.experimental.sparse.BCOO",
+          "parameters": [
+            {
+              "name": "mesh",
+              "annotation": "tatva.Mesh",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "n_dofs_per_node",
+              "annotation": "int",
+              "description": null,
+              "value": null
+            },
+            {
+              "name": "B",
+              "annotation": "jax.Array",
+              "description": null,
+              "value": null
+            }
+          ],
+          "returns": {
+            "name": "",
+            "annotation": null,
+            "description": null
+          },
+          "docstring": [],
+          "source": "def create_sparsity_pattern_KKT(mesh: Mesh, n_dofs_per_node: int, B: Array):\n    \"\"\"\n    Create a sparsity pattern for the KKT system.\n    Args:\n        mesh: Mesh object\n        n_dofs_per_node: Number of degrees of freedom per node\n        B: Constraint matrix (nb_cons, n_dofs)\n    Returns:\n        sparsity_pattern_KKT: jax.experimental.sparse.BCOO\n    \"\"\"\n\n    nb_cons = B.shape[0]\n\n    K_sparsity_pattern = create_sparsity_pattern(mesh, n_dofs_per_node=n_dofs_per_node)\n    B_sparsity_pattern = jax_sparse.BCOO.fromdense(B).astype(jnp.int32)\n\n    sparsity_pattern_left = jax_sparse.bcoo_concatenate(\n        [K_sparsity_pattern, B_sparsity_pattern], dimension=0\n    )\n\n    BT_sparsity_pattern = jax_sparse.BCOO.fromdense(B.T).astype(jnp.int32)\n    C = jax_sparse.BCOO.fromdense(jnp.eye(nb_cons, nb_cons, dtype=jnp.int32))\n    sparsity_pattern_right = jax_sparse.bcoo_concatenate(\n        [BT_sparsity_pattern, C], dimension=0\n    )\n\n    sparsity_pattern_KKT = jax_sparse.bcoo_concatenate(\n        [sparsity_pattern_left, sparsity_pattern_right], dimension=1\n    )\n\n    return sparsity_pattern_KKT"
+        },
+        "reduce_sparsity_pattern": {
+          "name": "reduce_sparsity_pattern",
+          "path": "tatva.sparse.reduce_sparsity_pattern",
+          "signature": "(pattern, free_dofs) -> BCOO",
+          "description": "Reduce a sparse matrix pattern to only the free dofs (for K_ff).",
+          "parameters": [
+            {
+              "name": "pattern",
+              "annotation": "jax.experimental.sparse.bcoo.BCOO",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Sparse matrix pattern in BCOO format on the full\nset of dofs."
+                }
+              ]
+            },
+            {
+              "name": "free_dofs",
+              "annotation": "jax.Array",
+              "description": [
+                {
+                  "kind": "text",
+                  "value": "Array of free dofs as integer indices."
+                }
+              ]
+            }
+          ],
+          "returns": {
+            "name": "BCOO",
+            "annotation": "jax.experimental.sparse.bcoo.BCOO",
+            "description": "Reduced sparse matrix pattern with rows and columns remapped\nto the reduced indexing of free dofs."
+          },
+          "docstring": [],
+          "source": "def reduce_sparsity_pattern(pattern: BCOO, free_dofs: Array) -> BCOO:\n    \"\"\"Reduce a sparse matrix pattern to only the free dofs (for K_ff).\n\n    Args:\n        pattern (BCOO): Sparse matrix pattern in BCOO format on the full\n            set of dofs.\n        free_dofs: Array of free dofs as integer indices.\n\n    Returns:\n        BCOO: Reduced sparse matrix pattern with rows and columns remapped\n            to the reduced indexing of free dofs.\n    \"\"\"\n    # Pull to host (avoid device OOM for big masks)\n    I = np.asarray(pattern.indices[:, 0])  # noqa: E741\n    J = np.asarray(pattern.indices[:, 1])\n    D = np.asarray(pattern.data)\n\n    n_full = int(pattern.shape[0])\n    free = np.asarray(free_dofs, dtype=np.int64)\n\n    # Membership mask: O(n_full) setup, O(nnz) index\n    is_free = np.zeros(n_full, dtype=bool)\n    is_free[free] = True\n    mask = is_free[I] & is_free[J]\n\n    I = I[mask]  # noqa: E741\n    J = J[mask]\n    D = D[mask]\n\n    # Full -> reduced reindex\n    index_map = -np.ones(n_full, dtype=np.int64)\n    index_map[free] = np.arange(free.size, dtype=np.int64)\n    I_red = index_map[I]\n    J_red = index_map[J]\n\n    # Deduplicate (sum data; for pure pattern set to 1)\n    keys = I_red * free.size + J_red\n    uniq, inv = np.unique(keys, return_inverse=True)\n    # accumulate\n    D_red = np.bincount(inv, weights=D, minlength=uniq.size)\n    I_red = (uniq // free.size).astype(np.int32)\n    J_red = (uniq % free.size).astype(np.int32)\n\n    # Back to JAX\n    indices_red = jnp.stack([jnp.asarray(I_red), jnp.asarray(J_red)], axis=1)\n    data_red = jnp.asarray(D_red)\n    shape = (free.size, free.size)\n\n    return BCOO((data_red, indices_red), shape=shape)"
+        }
+      }
+    },
     "plotting": {
       "name": "plotting",
       "path": "tatva.plotting",
-      "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/plotting/__init__.py",
+      "filepath": "/home/florez/work/code/tatva-fork/tatva/plotting/__init__.py",
       "description": null,
       "docstring": [],
       "attributes": [],
@@ -3542,7 +3542,7 @@
         "_pyvista": {
           "name": "_pyvista",
           "path": "tatva.plotting._pyvista",
-          "filepath": "/home/florez/work/code/tatva-fork/docs/.venv/lib/python3.14/site-packages/tatva/plotting/_pyvista.py",
+          "filepath": "/home/florez/work/code/tatva-fork/tatva/plotting/_pyvista.py",
           "description": null,
           "docstring": [],
           "attributes": [],
